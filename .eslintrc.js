@@ -27,7 +27,8 @@ module.exports = {
     "ignorePatterns": [".eslintrc.js"],
     "rules": {
         'import/first': ['error'],
-        'no-mixed-operators': 'off'
+        'no-mixed-operators': 'off',
+        '@typescript-eslint/strict-boolean-expressions': 'off'
     },
     "settings": {
         "import/resolver": {

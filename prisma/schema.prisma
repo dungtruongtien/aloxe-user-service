@@ -17,7 +17,7 @@ model User {
   email       String    @db.VarChar(255)
   address     String?
   dob         DateTime?
-  role        Int
+  role        Int //Staff, Customer, Driver
   status      Int
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at")
@@ -58,17 +58,18 @@ model Customer {
 }
 
 model Driver {
-  id           Int    @id @default(autoincrement())
-  bookingType Int @map("booking_type") // Premium, Basic.... 
-  driverNo     String @map("driver_no") @db.VarChar(255)
+  id          Int    @id @default(autoincrement())
+  bookingType Int    @map("booking_type") // Premium, Basic.... 
+  driverNo    String @map("driver_no") @db.VarChar(255)
 
-  userId  Int      @unique @map("user_id")
-  user    User     @relation(fields: [userId], references: [id], map: "fk_user_driver")
-  license License?
-  vehicle Vehicle?
+  userId       Int                 @unique @map("user_id")
+  user         User                @relation(fields: [userId], references: [id], map: "fk_user_driver")
+  license      License?
+  vehicle      Vehicle?
+  onlineSession DriverOnlineSession?
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedAt DateTime? @default(now()) @updatedAt @map("updated_at")
 
   @@map(name: "drivers")
 }
@@ -76,7 +77,7 @@ model Driver {
 model License {
   id            Int      @id @default(autoincrement())
   class         String   @db.VarChar(255)
-  issuedDate   DateTime @map("issued_date")
+  issuedDate    DateTime @map("issued_date")
   expiredDate   DateTime @map("expired_date")
   licenseNumber String   @map("license_number")
 
@@ -101,4 +102,20 @@ model Vehicle {
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map(name: "vehicles")
+}
+
+model DriverOnlineSession {
+  id               Int     @id @default(autoincrement())
+  driverId         Int     @unique() @map("driver_id")
+  currentLongitude Decimal @map("current_longitude")
+  currentLatitude  Decimal @map("current_latitude")
+  online_status    Int     @map("online_status")
+  working_status   Int     @map("working_status")
+
+  driver Driver @relation(fields: [driverId], references: [id], map: "fk_driver_onl_session_vehicle")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map(name: "driver_online_session")
 }

@@ -1,6 +1,17 @@
 import { type IUserRepo } from './interface'
 import prisma from '../client/prisma'
-import { type User } from '@prisma/client'
+import { type Prisma, type User } from '@prisma/client'
+
+export enum CustomerRoleEnum {
+  Staff = 1,
+  Customer = 2,
+  Driver = 3
+}
+
+export enum CustomerStatusEnum {
+  Active = 1,
+  Inactive = 2,
+}
 
 export class UserRepository implements IUserRepo {
   async getUsers (): Promise<User[]> {
@@ -20,7 +31,18 @@ export class UserRepository implements IUserRepo {
     })
   }
 
-  createUser: any
-  updateUser: any
-  deleteUser: any
+  async createCustomerUser (dto: Prisma.UserCreateInput): Promise<User> {
+    return await prisma.user.create({
+      data: dto
+    })
+  }
+
+  async getCustomerUserByPhone (phoneNumber: string): Promise<User | null> {
+    return await prisma.user.findFirst({
+      where: {
+        phoneNumber,
+        role: CustomerRoleEnum.Customer
+      }
+    })
+  }
 }

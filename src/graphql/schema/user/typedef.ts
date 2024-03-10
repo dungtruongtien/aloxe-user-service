@@ -7,6 +7,44 @@ export default gql`
     users: [User]
   }
 
+  extend type Mutation {
+    createCustomerUser(input: CreateCustomerUserRequest): CreateCustomerUserResponse
+  }
+
+  type UserEntity {
+    fullName: String
+    phoneNumber: String
+    password: String
+    email: String
+    address: String
+    dob: Date
+    role: number
+    status: number
+  }
+
+  type CreateCustomerUserResponse {
+    code: String
+    message: String
+    data: UserEntity
+  }
+
+  type CreateCustomerUserRequest {
+    fullName: String!
+    phoneNumber: String!
+    password: String!
+    email: String!
+    address: String
+    dob: Date
+    role: number
+    status: number
+    customer: CreateCustomerRequest
+  }
+  
+  type CreateCustomerRequest {
+    level: String
+    customerNo: String
+  }
+
   type GetUserRes {
     code: String
     message: String
