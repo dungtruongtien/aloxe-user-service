@@ -39,16 +39,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserRepository = void 0;
+exports.UserRepository = exports.CustomerStatusEnum = exports.CustomerRoleEnum = void 0;
 var prisma_1 = __importDefault(require("../client/prisma"));
+var CustomerRoleEnum;
+(function (CustomerRoleEnum) {
+    CustomerRoleEnum[CustomerRoleEnum["Staff"] = 1] = "Staff";
+    CustomerRoleEnum[CustomerRoleEnum["Customer"] = 2] = "Customer";
+    CustomerRoleEnum[CustomerRoleEnum["Driver"] = 3] = "Driver";
+})(CustomerRoleEnum || (exports.CustomerRoleEnum = CustomerRoleEnum = {}));
+var CustomerStatusEnum;
+(function (CustomerStatusEnum) {
+    CustomerStatusEnum[CustomerStatusEnum["Active"] = 1] = "Active";
+    CustomerStatusEnum[CustomerStatusEnum["Inactive"] = 2] = "Inactive";
+})(CustomerStatusEnum || (exports.CustomerStatusEnum = CustomerStatusEnum = {}));
 var UserRepository = (function () {
     function UserRepository() {
     }
-    UserRepository.prototype.getUsers = function () {
+    UserRepository.prototype.getUsers = function (filter) {
         return __awaiter(this, void 0, void 0, function () {
+            var where;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, prisma_1.default.user.findMany()];
+                    case 0:
+                        where = {};
+                        if ((filter === null || filter === void 0 ? void 0 : filter.phoneNumber) && filter.phoneNumber.length > 0) {
+                            where.phoneNumber = {
+                                in: filter.phoneNumber
+                            };
+                        }
+                        return [4, prisma_1.default.user.findMany({ where: where })];
                     case 1: return [2, _a.sent()];
                 }
             });
@@ -56,7 +75,6 @@ var UserRepository = (function () {
     };
     UserRepository.prototype.getUser = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, prisma_1.default.user.findUnique({
@@ -69,9 +87,34 @@ var UserRepository = (function () {
                                 driver: true
                             }
                         })];
-                    case 1:
-                        data = _a.sent();
-                        return [2, data];
+                    case 1: return [2, _a.sent()];
+                }
+            });
+        });
+    };
+    UserRepository.prototype.createCustomerUser = function (dto) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, prisma_1.default.user.create({
+                            data: dto
+                        })];
+                    case 1: return [2, _a.sent()];
+                }
+            });
+        });
+    };
+    UserRepository.prototype.getCustomerUserByPhone = function (phoneNumber) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, prisma_1.default.user.findFirst({
+                            where: {
+                                phoneNumber: phoneNumber,
+                                role: CustomerRoleEnum.Customer
+                            }
+                        })];
+                    case 1: return [2, _a.sent()];
                 }
             });
         });

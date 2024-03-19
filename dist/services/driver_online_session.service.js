@@ -36,56 +36,55 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var user_repository_1 = require("../repository/user.repository");
-var user_service_1 = require("../services/user.service");
-var user_account_repository_1 = require("../repository/user_account.repository");
-var UserGraphController = (function () {
-    function UserGraphController() {
-        this.userRepository = new user_repository_1.UserRepository();
-        this.userAccountRepository = new user_account_repository_1.UserAccountRepository();
-        this.userService = new user_service_1.UserService(this.userRepository, this.userAccountRepository);
+exports.DriverOnlineSessionService = void 0;
+var driver_online_session_repository_1 = require("../repository/driver_online_session.repository");
+var DriverOnlineSessionService = (function () {
+    function DriverOnlineSessionService(driverOnlineSessionRepo, driverRepo) {
+        this.driverOnlineSessionRepo = driverOnlineSessionRepo;
+        this.driverRepo = driverRepo;
     }
-    UserGraphController.prototype.getUsers = function () {
+    DriverOnlineSessionService.prototype.switchOnOffStatus = function (input) {
         return __awaiter(this, void 0, void 0, function () {
+            var driverData, created, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.userService.getUsers()];
+                    case 0:
+                        if (!(input.type === driver_online_session_repository_1.DriverOnlineSessionOnlineStatusEnum.ONLINE)) return [3, 2];
+                        return [4, this.driverOnlineSessionRepo.hardDelete(input.driverId)];
                     case 1: return [2, _a.sent()];
+                    case 2: return [4, this.driverRepo.getDriver(input.driverId)];
+                    case 3:
+                        driverData = _a.sent();
+                        if (!driverData) {
+                            throw new Error('DriverNotFound');
+                        }
+                        _a.label = 4;
+                    case 4:
+                        _a.trys.push([4, 6, , 7]);
+                        return [4, this.driverOnlineSessionRepo.createOne({
+                                driver: {
+                                    connect: { id: driverData.id }
+                                },
+                                currentLatitude: input.lat,
+                                currentLongitude: input.long,
+                                online_status: driver_online_session_repository_1.DriverOnlineSessionOnlineStatusEnum.ONLINE,
+                                working_status: driver_online_session_repository_1.DriverOnlineSessionWorkingStatusEnum.WAITING_FOR_CUSTOMER
+                            })];
+                    case 5:
+                        created = _a.sent();
+                        if (!created) {
+                            throw new Error('Cannot switch user to online status');
+                        }
+                        return [2, created];
+                    case 6:
+                        err_1 = _a.sent();
+                        return [2, null];
+                    case 7: return [2];
                 }
             });
         });
     };
-    UserGraphController.prototype.getUser = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, this.userService.getUser(id)];
-                    case 1: return [2, _a.sent()];
-                }
-            });
-        });
-    };
-    UserGraphController.prototype.me = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, this.userService.getUser(id)];
-                    case 1: return [2, _a.sent()];
-                }
-            });
-        });
-    };
-    UserGraphController.prototype.createCustomerUser = function (input) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, this.userService.createCustomerUser(input)];
-                    case 1: return [2, _a.sent()];
-                }
-            });
-        });
-    };
-    return UserGraphController;
+    return DriverOnlineSessionService;
 }());
-exports.default = UserGraphController;
-//# sourceMappingURL=user.controller.graph.js.map
+exports.DriverOnlineSessionService = DriverOnlineSessionService;
+//# sourceMappingURL=driver_online_session.service.js.map

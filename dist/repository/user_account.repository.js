@@ -35,57 +35,44 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var user_repository_1 = require("../repository/user.repository");
-var user_service_1 = require("../services/user.service");
-var user_account_repository_1 = require("../repository/user_account.repository");
-var UserGraphController = (function () {
-    function UserGraphController() {
-        this.userRepository = new user_repository_1.UserRepository();
-        this.userAccountRepository = new user_account_repository_1.UserAccountRepository();
-        this.userService = new user_service_1.UserService(this.userRepository, this.userAccountRepository);
+exports.UserAccountRepository = void 0;
+var constant_1 = require("../common/constant");
+var axios_1 = __importDefault(require("axios"));
+var UserAccountRepository = (function () {
+    function UserAccountRepository() {
     }
-    UserGraphController.prototype.getUsers = function () {
+    UserAccountRepository.prototype.createUserAccount = function (dto) {
         return __awaiter(this, void 0, void 0, function () {
+            var config, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.userService.getUsers()];
-                    case 1: return [2, _a.sent()];
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        config = {
+                            method: 'post',
+                            maxBodyLength: Infinity,
+                            url: 'http://localhost:4003/api/user_accounts/',
+                            headers: {
+                                authorization: constant_1.INTERNAL_TOKEN
+                            }
+                        };
+                        return [4, axios_1.default.request(config)];
+                    case 1:
+                        _a.sent();
+                        return [2, true];
+                    case 2:
+                        err_1 = _a.sent();
+                        return [2, false];
+                    case 3: return [2];
                 }
             });
         });
     };
-    UserGraphController.prototype.getUser = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, this.userService.getUser(id)];
-                    case 1: return [2, _a.sent()];
-                }
-            });
-        });
-    };
-    UserGraphController.prototype.me = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, this.userService.getUser(id)];
-                    case 1: return [2, _a.sent()];
-                }
-            });
-        });
-    };
-    UserGraphController.prototype.createCustomerUser = function (input) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, this.userService.createCustomerUser(input)];
-                    case 1: return [2, _a.sent()];
-                }
-            });
-        });
-    };
-    return UserGraphController;
+    return UserAccountRepository;
 }());
-exports.default = UserGraphController;
-//# sourceMappingURL=user.controller.graph.js.map
+exports.UserAccountRepository = UserAccountRepository;
+//# sourceMappingURL=user_account.repository.js.map

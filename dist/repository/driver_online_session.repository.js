@@ -35,57 +35,56 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var user_repository_1 = require("../repository/user.repository");
-var user_service_1 = require("../services/user.service");
-var user_account_repository_1 = require("../repository/user_account.repository");
-var UserGraphController = (function () {
-    function UserGraphController() {
-        this.userRepository = new user_repository_1.UserRepository();
-        this.userAccountRepository = new user_account_repository_1.UserAccountRepository();
-        this.userService = new user_service_1.UserService(this.userRepository, this.userAccountRepository);
+exports.DriverOnlineSessionRepository = exports.DriverOnlineSessionWorkingStatusEnum = exports.DriverOnlineSessionOnlineStatusEnum = exports.DRIVER_ONLINE_SESSION_MAPPING = void 0;
+var prisma_1 = __importDefault(require("../client/prisma"));
+exports.DRIVER_ONLINE_SESSION_MAPPING = {
+    WAITING_FOR_CUSTOMER: 1,
+    DRIVING: 2
+};
+var DriverOnlineSessionOnlineStatusEnum;
+(function (DriverOnlineSessionOnlineStatusEnum) {
+    DriverOnlineSessionOnlineStatusEnum[DriverOnlineSessionOnlineStatusEnum["ONLINE"] = 1] = "ONLINE";
+    DriverOnlineSessionOnlineStatusEnum[DriverOnlineSessionOnlineStatusEnum["OFFLINE"] = 2] = "OFFLINE";
+})(DriverOnlineSessionOnlineStatusEnum || (exports.DriverOnlineSessionOnlineStatusEnum = DriverOnlineSessionOnlineStatusEnum = {}));
+var DriverOnlineSessionWorkingStatusEnum;
+(function (DriverOnlineSessionWorkingStatusEnum) {
+    DriverOnlineSessionWorkingStatusEnum[DriverOnlineSessionWorkingStatusEnum["WAITING_FOR_CUSTOMER"] = 1] = "WAITING_FOR_CUSTOMER";
+    DriverOnlineSessionWorkingStatusEnum[DriverOnlineSessionWorkingStatusEnum["DRIVING"] = 2] = "DRIVING";
+})(DriverOnlineSessionWorkingStatusEnum || (exports.DriverOnlineSessionWorkingStatusEnum = DriverOnlineSessionWorkingStatusEnum = {}));
+var DriverOnlineSessionRepository = (function () {
+    function DriverOnlineSessionRepository() {
     }
-    UserGraphController.prototype.getUsers = function () {
+    DriverOnlineSessionRepository.prototype.createOne = function (dto) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.userService.getUsers()];
+                    case 0: return [4, prisma_1.default.driverOnlineSession.create({
+                            data: dto
+                        })];
                     case 1: return [2, _a.sent()];
                 }
             });
         });
     };
-    UserGraphController.prototype.getUser = function (id) {
+    DriverOnlineSessionRepository.prototype.hardDelete = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.userService.getUser(id)];
+                    case 0: return [4, prisma_1.default.driverOnlineSession.delete({
+                            where: {
+                                id: id
+                            }
+                        })];
                     case 1: return [2, _a.sent()];
                 }
             });
         });
     };
-    UserGraphController.prototype.me = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, this.userService.getUser(id)];
-                    case 1: return [2, _a.sent()];
-                }
-            });
-        });
-    };
-    UserGraphController.prototype.createCustomerUser = function (input) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4, this.userService.createCustomerUser(input)];
-                    case 1: return [2, _a.sent()];
-                }
-            });
-        });
-    };
-    return UserGraphController;
+    return DriverOnlineSessionRepository;
 }());
-exports.default = UserGraphController;
-//# sourceMappingURL=user.controller.graph.js.map
+exports.DriverOnlineSessionRepository = DriverOnlineSessionRepository;
+//# sourceMappingURL=driver_online_session.repository.js.map

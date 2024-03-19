@@ -37,16 +37,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
+var user_repository_1 = require("../repository/user.repository");
 var UserService = (function () {
-    function UserService(userRepo) {
+    function UserService(userRepo, userAccountRepo) {
         this.userRepo = userRepo;
+        this.userAccountRepo = userAccountRepo;
     }
-    UserService.prototype.getUsers = function () {
+    UserService.prototype.getUsers = function (filter) {
         return __awaiter(this, void 0, void 0, function () {
+            var data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.userRepo.getUsers()];
-                    case 1: return [2, _a.sent()];
+                    case 0: return [4, this.userRepo.getUsers(filter)];
+                    case 1:
+                        data = _a.sent();
+                        return [2, data];
                 }
             });
         });
@@ -67,6 +72,48 @@ var UserService = (function () {
                 switch (_a.label) {
                     case 0: return [4, this.userRepo.getUser(id)];
                     case 1: return [2, _a.sent()];
+                }
+            });
+        });
+    };
+    UserService.prototype.createCustomerUser = function (input) {
+        return __awaiter(this, void 0, void 0, function () {
+            var existsCustomerUser, createCustomerUserDto, customerUser, createUserAccountDto;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.userRepo.getCustomerUserByPhone(input.phoneNumber)];
+                    case 1:
+                        existsCustomerUser = _a.sent();
+                        if (!existsCustomerUser) {
+                            throw new Error('RegisteredPhoneNumber');
+                        }
+                        createCustomerUserDto = {
+                            fullName: input.fullName,
+                            phoneNumber: input.phoneNumber,
+                            email: input.email,
+                            address: input.address,
+                            dob: input.dob,
+                            role: user_repository_1.CustomerRoleEnum.Customer,
+                            status: user_repository_1.CustomerStatusEnum.Active,
+                            customer: {
+                                create: {
+                                    customerNo: input.customer.customerNo,
+                                    level: input.customer.level
+                                }
+                            }
+                        };
+                        return [4, this.userRepo.createCustomerUser(createCustomerUserDto)];
+                    case 2:
+                        customerUser = _a.sent();
+                        createUserAccountDto = {
+                            username: input.phoneNumber,
+                            password: input.password,
+                            userId: customerUser.id
+                        };
+                        return [4, this.userAccountRepo.createUserAccount(createUserAccountDto)];
+                    case 3:
+                        _a.sent();
+                        return [2, customerUser];
                 }
             });
         });

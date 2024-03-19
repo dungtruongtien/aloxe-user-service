@@ -17,9 +17,9 @@ export default gql`
     password: String
     email: String
     address: String
-    dob: Date
-    role: number
-    status: number
+    dob: String
+    role: Int
+    status: Int
   }
 
   type CreateCustomerUserResponse {
@@ -28,19 +28,19 @@ export default gql`
     data: UserEntity
   }
 
-  type CreateCustomerUserRequest {
+  input CreateCustomerUserRequest {
     fullName: String!
     phoneNumber: String!
     password: String!
     email: String!
     address: String
-    dob: Date
-    role: number
-    status: number
+    dob: String
+    role: Int
+    status: Int
     customer: CreateCustomerRequest
   }
   
-  type CreateCustomerRequest {
+  input CreateCustomerRequest {
     level: String
     customerNo: String
   }

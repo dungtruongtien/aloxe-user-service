@@ -1,6 +1,6 @@
 import { type Prisma, type User } from '@prisma/client'
 import { type IUserService } from './interface'
-import { type IUserAccountRepo, type IUserRepo } from '../repository/interface'
+import { type IGetUsersFilter, type IUserAccountRepo, type IUserRepo } from '../repository/interface'
 import { type ICreateCustomerUserInput } from './dto/user.dto'
 import { CustomerRoleEnum, CustomerStatusEnum } from '../repository/user.repository'
 import { type ICreateUserAccountInput } from '../repository/dto/user_account.dto'
@@ -13,8 +13,9 @@ export class UserService implements IUserService {
     this.userAccountRepo = userAccountRepo
   }
 
-  async getUsers (): Promise<User[]> {
-    return await this.userRepo.getUsers()
+  async getListUsers (filter?: IGetUsersFilter): Promise<User[]> {
+    const data = await this.userRepo.getListUsers(filter)
+    return data
   }
 
   async getUser (id: number): Promise<User | null> {

@@ -3,12 +3,11 @@
 /* eslint @typescript-eslint/no-unsafe-argument: 0 */ // --> OFF
 
 import express from 'express'
-import UserRestController from '../controller/user.controller.rest'
+import StaffRestController from '../controller/staff.controller.rest'
 const router = express.Router()
 
-const userController = new UserRestController()
+const staffController = new StaffRestController()
 
-router.get('/:id', userController.getUser.bind(userController))
-router.get('/', userController.getListUsers.bind(userController))
+router.get('/', staffController.getListStaffs.bind(staffController))
 
 export default router

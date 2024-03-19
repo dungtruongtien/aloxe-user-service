@@ -3,12 +3,11 @@
 /* eslint @typescript-eslint/no-unsafe-argument: 0 */ // --> OFF
 
 import express from 'express'
-import UserRestController from '../controller/user.controller.rest'
+import DriverRestController from '../controller/driver.controller.rest'
 const router = express.Router()
 
-const userController = new UserRestController()
+const driverController = new DriverRestController()
 
-router.get('/:id', userController.getUser.bind(userController))
-router.get('/', userController.getListUsers.bind(userController))
+router.get('/', driverController.getListDrivers.bind(driverController))
 
 export default router

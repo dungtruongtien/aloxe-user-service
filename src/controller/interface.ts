@@ -1,4 +1,4 @@
-import { type User } from '@prisma/client'
+import { type Customer, type Driver, type Staff, type User } from '@prisma/client'
 import { type NextFunction, type Request, type Response } from 'express'
 import { type ICreateCustomerUserInput } from '../services/dto/user.dto'
 
@@ -12,5 +12,17 @@ export interface IUserGraphController {
 export interface IUserRestController {
   getUser: (req: Request, res: Response, next: NextFunction) => any
   me: (req: Request, res: Response, next: NextFunction) => any
-  getUsers: () => Promise<User[]>
+  getListUsers: (req: Request, res: Response, next: NextFunction) => Promise<User[]>
+}
+
+export interface IStaffRestController {
+  getListStaffs: (req: Request, res: Response, next: NextFunction) => Promise<Staff[]>
+}
+
+export interface IDriverRestController {
+  getListDrivers: (req: Request, res: Response, next: NextFunction) => Promise<Driver[]>
+}
+
+export interface ICustomerRestController {
+  getListCustomers: (req: Request, res: Response, next: NextFunction) => Promise<Customer[]>
 }
