@@ -1,10 +1,10 @@
 import { type ICustomerService } from '../services/interface'
 import { type ICustomerRestController } from './interface'
 import { type NextFunction, type Request, type Response } from 'express'
-import { type IGetCustomersFilter } from '../repository/interface'
 import { HttpStatusCode } from 'axios'
-import { CustomerRepository } from '../repository/customer.repository'
+import { CustomerRepository } from '../repository/customer/customer.repository'
 import { CustomerService } from '../services/customer.service'
+import { type IGetCustomersFilter } from '../repository/customer/customer.interface'
 
 export default class CustomerRestController implements ICustomerRestController {
   private readonly customerService: ICustomerService

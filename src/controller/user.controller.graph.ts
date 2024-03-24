@@ -1,10 +1,10 @@
 import { type User } from '@prisma/client'
-import { UserRepository } from '../repository/user.repository'
 import { type IUserService } from '../services/interface'
 import { UserService } from '../services/user.service'
 import { type IUserGraphController } from './interface'
-import { UserAccountRepository } from '../repository/user_account.repository'
+import { UserAccountRepository } from '../repository/user_account/user_account.repository'
 import { type ICreateCustomerUserInput } from '../services/dto/user.dto'
+import { UserRepository } from '../repository/user/user.repository'
 
 export default class UserGraphController implements IUserGraphController {
   private readonly userService: IUserService
@@ -15,7 +15,7 @@ export default class UserGraphController implements IUserGraphController {
   }
 
   async getUsers (): Promise<User[]> {
-    return await this.userService.getUsers()
+    return await this.userService.getListUsers()
   }
 
   async getUser (id: number): Promise<User | null> {

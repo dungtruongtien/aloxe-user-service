@@ -1,8 +1,11 @@
 import { type Staff, type DriverOnlineSession, type User, type Driver, type Customer } from '@prisma/client'
-import { type DriverOnlineSessionOnlineStatusEnum } from '../repository/driver_online_session.repository'
+import { type DriverOnlineSessionOnlineStatusEnum } from '../repository/driver/driver_online_session.repository'
 import { type Decimal } from '@prisma/client/runtime/library'
 import { type ICreateCustomerUserInput } from './dto/user.dto'
-import { type IGetCustomersFilter, type IGetDriversFilter, type IGetStaffsFilter, type IGetUsersFilter } from '../repository/interface'
+import { type IGetUsersFilter } from '../repository/user/user.interface'
+import { type IGetStaffsFilter } from '../repository/staff/staff.interface'
+import { type IGetDriversFilter } from '../repository/driver/driver.interface'
+import { type IGetCustomersFilter } from '../repository/customer/customer.interface'
 
 export interface IService {
   user: IUserService

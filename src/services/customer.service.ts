@@ -1,6 +1,6 @@
 import { type Customer } from '@prisma/client'
 import { type ICustomerService } from './interface'
-import { type IGetCustomersFilter, type ICustomerRepo } from '../repository/interface'
+import { type ICustomerRepo, type IGetCustomersFilter } from '../repository/customer/customer.interface'
 export class CustomerService implements ICustomerService {
   private readonly customerRepo: ICustomerRepo
   constructor (customerRepo: ICustomerRepo) {

@@ -1,6 +1,6 @@
-import { type IStaffRepo, type IGetStaffsFilter } from './interface'
-import prisma from '../client/prisma'
+import prisma from '../../client/prisma'
 import { type Staff, type Prisma } from '@prisma/client'
+import { type IGetStaffsFilter, type IStaffRepo } from './staff.interface'
 
 export class StaffRepository implements IStaffRepo {
   async getListStaffs (filter?: IGetStaffsFilter): Promise<Staff[]> {

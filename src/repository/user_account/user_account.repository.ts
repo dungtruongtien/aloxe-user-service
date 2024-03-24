@@ -1,7 +1,6 @@
-import { type IUserAccountRepo } from './interface'
-import { type ICreateUserAccountInput } from './dto/user_account.dto'
-import { INTERNAL_TOKEN } from '../common/constant'
+import { INTERNAL_TOKEN } from '../../common/constant'
 import axios from 'axios'
+import { type ICreateUserAccountInput, type IUserAccountRepo } from './user_account.interface'
 
 export class UserAccountRepository implements IUserAccountRepo {
   async createUserAccount (dto: ICreateUserAccountInput): Promise<boolean> {

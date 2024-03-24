@@ -1,11 +1,11 @@
-import { UserRepository } from '../repository/user.repository'
+import { UserRepository } from '../repository/user/user.repository'
 import { type IUserService } from '../services/interface'
 import { UserService } from '../services/user.service'
 import { type IUserRestController } from './interface'
 import { type NextFunction, type Request, type Response } from 'express'
-import { UserAccountRepository } from '../repository/user_account.repository'
-import { type IGetUsersFilter } from '../repository/interface'
+import { UserAccountRepository } from '../repository/user_account/user_account.repository'
 import { HttpStatusCode } from 'axios'
+import { type IGetUsersFilter } from '../repository/user/user.interface'
 
 export default class UserRestController implements IUserRestController {
   private readonly userService: IUserService

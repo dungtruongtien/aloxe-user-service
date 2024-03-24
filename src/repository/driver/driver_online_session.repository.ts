@@ -1,5 +1,5 @@
-import { type IDriverOnlineSessionRepo } from './interface'
-import prisma from '../client/prisma'
+import { type IDriverOnlineSessionRepo } from '../interface'
+import prisma from '../../client/prisma'
 import { type Prisma, type DriverOnlineSession } from '@prisma/client'
 
 export const DRIVER_ONLINE_SESSION_MAPPING = {

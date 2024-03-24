@@ -1,6 +1,6 @@
-import { type ICustomerRepo, type IGetCustomersFilter } from './interface'
-import prisma from '../client/prisma'
+import prisma from '../../client/prisma'
 import { type Prisma, type Customer } from '@prisma/client'
+import { type ICustomerRepo, type IGetCustomersFilter } from './customer.interface'
 
 export enum CustomerRoleEnum {
   Staff = 1,

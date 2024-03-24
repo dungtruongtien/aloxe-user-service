@@ -1,6 +1,6 @@
 import { type Driver } from '@prisma/client'
 import { type IDriverService } from './interface'
-import { type IDriverRepo, type IGetDriversFilter } from '../repository/interface'
+import { type IDriverRepo, type IGetDriversFilter } from '../repository/driver/driver.interface'
 export class DriverService implements IDriverService {
   private readonly driverRepo: IDriverRepo
   constructor (driverRepo: IDriverRepo) {

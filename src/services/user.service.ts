@@ -1,9 +1,9 @@
 import { type Prisma, type User } from '@prisma/client'
 import { type IUserService } from './interface'
-import { type IGetUsersFilter, type IUserAccountRepo, type IUserRepo } from '../repository/interface'
 import { type ICreateCustomerUserInput } from './dto/user.dto'
-import { CustomerRoleEnum, CustomerStatusEnum } from '../repository/user.repository'
-import { type ICreateUserAccountInput } from '../repository/dto/user_account.dto'
+import { CustomerRoleEnum, CustomerStatusEnum } from '../repository/user/user.repository'
+import { type IGetUsersFilter, type IUserRepo } from '../repository/user/user.interface'
+import { type ICreateUserAccountInput, type IUserAccountRepo } from '../repository/user_account/user_account.interface'
 
 export class UserService implements IUserService {
   private readonly userRepo: IUserRepo

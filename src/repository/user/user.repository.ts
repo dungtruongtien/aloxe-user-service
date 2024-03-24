@@ -1,6 +1,6 @@
-import { type IGetCustomersFilter, type IGetDriversFilter, type IGetStaffsFilter, type IGetUsersFilter, type IUserRepo } from './interface'
-import prisma from '../client/prisma'
-import { type Staff, type Prisma, type User, type Driver, type Customer } from '@prisma/client'
+import prisma from '../../client/prisma'
+import { type Prisma, type User } from '@prisma/client'
+import { type IGetUsersFilter, type IUserRepo } from './user.interface'
 
 export enum CustomerRoleEnum {
   Staff = 1,
@@ -66,51 +66,6 @@ export class UserRepository implements IUserRepo {
         staff: true,
         customer: true,
         driver: true
-      }
-    })
-  }
-
-  async getListStaffs (filter?: IGetStaffsFilter): Promise<Staff[]> {
-    const where: Prisma.StaffWhereInput = {}
-    if (filter && filter?.ids.length > 0) {
-      where.id = {
-        in: filter.ids
-      }
-    }
-    return await prisma.staff.findMany({
-      where,
-      include: {
-        user: true
-      }
-    })
-  }
-
-  async getListDrivers (filter?: IGetDriversFilter): Promise<Driver[]> {
-    const where: Prisma.DriverWhereInput = {}
-    if (filter && filter?.ids.length > 0) {
-      where.id = {
-        in: filter.ids
-      }
-    }
-    return await prisma.driver.findMany({
-      where,
-      include: {
-        user: true
-      }
-    })
-  }
-
-  async getListCustomers (filter?: IGetCustomersFilter): Promise<Customer[]> {
-    const where: Prisma.CustomerWhereInput = {}
-    if (filter && filter?.ids.length > 0) {
-      where.id = {
-        in: filter.ids
-      }
-    }
-    return await prisma.customer.findMany({
-      where,
-      include: {
-        user: true
       }
     })
   }

@@ -1,7 +1,7 @@
 import { type DriverOnlineSession } from '@prisma/client'
 import { type ISwitchOnOffStatusInput, type IDriverLoginSessionService } from './interface'
 import { type IDriverRepo, type IDriverOnlineSessionRepo } from '../repository/interface'
-import { DriverOnlineSessionOnlineStatusEnum, DriverOnlineSessionWorkingStatusEnum } from '../repository/driver_online_session.repository'
+import { DriverOnlineSessionOnlineStatusEnum, DriverOnlineSessionWorkingStatusEnum } from '../repository/driver/driver_online_session.repository'
 
 export class DriverOnlineSessionService implements IDriverLoginSessionService {
   private readonly driverOnlineSessionRepo: IDriverOnlineSessionRepo

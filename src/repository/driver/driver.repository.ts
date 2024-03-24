@@ -1,6 +1,6 @@
-import { type IGetDriversFilter, type IDriverRepo } from './interface'
-import prisma from '../client/prisma'
+import prisma from '../../client/prisma'
 import { type Prisma, type Driver } from '@prisma/client'
+import { type IDriverRepo, type IGetDriversFilter } from './driver.interface'
 
 export class DriverRepository implements IDriverRepo {
   async getDriver (id: number): Promise<Driver | null> {

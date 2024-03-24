@@ -1,10 +1,10 @@
 import { type IDriverService } from '../services/interface'
 import { type IDriverRestController } from './interface'
 import { type NextFunction, type Request, type Response } from 'express'
-import { type IGetDriversFilter } from '../repository/interface'
 import { HttpStatusCode } from 'axios'
-import { DriverRepository } from '../repository/driver.repository'
+import { DriverRepository } from '../repository/driver/driver.repository'
 import { DriverService } from '../services/driver.service'
+import { type IGetDriversFilter } from '../repository/driver/driver.interface'
 
 export default class DriverRestController implements IDriverRestController {
   private readonly driverService: IDriverService
