@@ -8,10 +8,11 @@ export class UserAccountRepository implements IUserAccountRepo {
       const config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:4003/api/user_accounts/',
+        url: 'http://localhost:4004/api/user_accounts/',
         headers: {
           authorization: INTERNAL_TOKEN
-        }
+        },
+        data: dto
       }
       await axios.request(config)
       return true

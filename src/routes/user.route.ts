@@ -10,5 +10,6 @@ const userController = new UserRestController()
 
 router.get('/:id', userController.getUser.bind(userController))
 router.get('/', userController.getListUsers.bind(userController))
+router.post('/', userController.createCustomerUser.bind(userController))
 
 export default router

@@ -36,9 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var user_repository_1 = require("../repository/user.repository");
-var user_service_1 = require("../services/user.service");
-var user_account_repository_1 = require("../repository/user_account.repository");
+var user_service_1 = require("../services/user/user.service");
+var user_account_repository_1 = require("../repository/user_account/user_account.repository");
+var user_repository_1 = require("../repository/user/user.repository");
 var UserGraphController = (function () {
     function UserGraphController() {
         this.userRepository = new user_repository_1.UserRepository();
@@ -49,7 +49,7 @@ var UserGraphController = (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.userService.getUsers()];
+                    case 0: return [4, this.userService.getListUsers()];
                     case 1: return [2, _a.sent()];
                 }
             });

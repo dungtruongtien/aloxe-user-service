@@ -1,11 +1,12 @@
 import { UserRepository } from '../repository/user/user.repository'
 import { type IUserService } from '../services/interface'
-import { UserService } from '../services/user.service'
+import { UserService } from '../services/user/user.service'
 import { type IUserRestController } from './interface'
 import { type NextFunction, type Request, type Response } from 'express'
 import { UserAccountRepository } from '../repository/user_account/user_account.repository'
 import { HttpStatusCode } from 'axios'
 import { type IGetUsersFilter } from '../repository/user/user.interface'
+import { type ICreateCustomerUserInput } from './dto/user.dto'
 
 export default class UserRestController implements IUserRestController {
   private readonly userService: IUserService
@@ -34,6 +35,14 @@ export default class UserRestController implements IUserRestController {
 
   async me (req: Request, res: Response, next: NextFunction): Promise<any> {
     const user = await this.userService.getUser(res.locals.user.id as number)
+    res.status(HttpStatusCode.Ok).json({
+      status: 'SUCCESS',
+      data: user
+    })
+  }
+
+  async createCustomerUser (req: Request, res: Response, next: NextFunction): Promise<any> {
+    const user = await this.userService.createCustomerUser(req.body as ICreateCustomerUserInput)
     res.status(HttpStatusCode.Ok).json({
       status: 'SUCCESS',
       data: user

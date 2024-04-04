@@ -36,9 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var user_repository_1 = require("../repository/user.repository");
-var user_service_1 = require("../services/user.service");
-var user_account_repository_1 = require("../repository/user_account.repository");
+var user_repository_1 = require("../repository/user/user.repository");
+var user_service_1 = require("../services/user/user.service");
+var user_account_repository_1 = require("../repository/user_account/user_account.repository");
 var axios_1 = require("axios");
 var UserRestController = (function () {
     function UserRestController() {
@@ -46,14 +46,14 @@ var UserRestController = (function () {
         this.userAccountRepository = new user_account_repository_1.UserAccountRepository();
         this.userService = new user_service_1.UserService(this.userRepository, this.userAccountRepository);
     }
-    UserRestController.prototype.getUsers = function (req, res, next) {
+    UserRestController.prototype.getListUsers = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var filter, data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         filter = req.query.filter;
-                        return [4, this.userService.getUsers(filter)];
+                        return [4, this.userService.getListUsers(filter)];
                     case 1:
                         data = _a.sent();
                         res.status(axios_1.HttpStatusCode.Ok).json({
@@ -88,6 +88,23 @@ var UserRestController = (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, this.userService.getUser(res.locals.user.id)];
+                    case 1:
+                        user = _a.sent();
+                        res.status(axios_1.HttpStatusCode.Ok).json({
+                            status: 'SUCCESS',
+                            data: user
+                        });
+                        return [2];
+                }
+            });
+        });
+    };
+    UserRestController.prototype.createCustomerUser = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.userService.createCustomerUser(req.body)];
                     case 1:
                         user = _a.sent();
                         res.status(axios_1.HttpStatusCode.Ok).json({

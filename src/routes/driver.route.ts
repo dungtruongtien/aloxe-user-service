@@ -9,5 +9,7 @@ const router = express.Router()
 const driverController = new DriverRestController()
 
 router.get('/', driverController.getListDrivers.bind(driverController))
+router.put('/online-session', driverController.updateDriverOnlineSession.bind(driverController))
+router.get('/available-drivers', driverController.getAvailableDrivers.bind(driverController))
 
 export default router

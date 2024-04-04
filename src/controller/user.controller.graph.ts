@@ -1,6 +1,6 @@
 import { type User } from '@prisma/client'
 import { type IUserService } from '../services/interface'
-import { UserService } from '../services/user.service'
+import { UserService } from '../services/user/user.service'
 import { type IUserGraphController } from './interface'
 import { UserAccountRepository } from '../repository/user_account/user_account.repository'
 import { type ICreateCustomerUserInput } from '../services/dto/user.dto'

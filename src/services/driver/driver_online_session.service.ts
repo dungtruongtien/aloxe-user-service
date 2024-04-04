@@ -1,9 +1,9 @@
-import { type DriverOnlineSession } from '@prisma/client'
-import { type ISwitchOnOffStatusInput, type IDriverLoginSessionService } from './interface'
-import { type IDriverRepo, type IDriverOnlineSessionRepo } from '../repository/interface'
-import { DriverOnlineSessionOnlineStatusEnum, DriverOnlineSessionWorkingStatusEnum } from '../repository/driver/driver_online_session.repository'
+import { type Prisma, type DriverOnlineSession } from '@prisma/client'
+import { DriverOnlineSessionOnlineStatusEnum, DriverOnlineSessionWorkingStatusEnum } from '../../repository/driver/driver_online_session.repository'
+import { type IDriverOnlineSessionRepo, type IDriverRepo } from '../../repository/driver/driver.interface'
+import { type IUpdateDriverLoginSession, type IDriverOnlineSessionService, type ISwitchOnOffStatusInput } from './driver.interface'
 
-export class DriverOnlineSessionService implements IDriverLoginSessionService {
+export class DriverOnlineSessionService implements IDriverOnlineSessionService {
   private readonly driverOnlineSessionRepo: IDriverOnlineSessionRepo
   private readonly driverRepo: IDriverRepo
   constructor (driverOnlineSessionRepo: IDriverOnlineSessionRepo, driverRepo: IDriverRepo) {
@@ -28,8 +28,8 @@ export class DriverOnlineSessionService implements IDriverLoginSessionService {
         },
         currentLatitude: input.lat,
         currentLongitude: input.long,
-        online_status: DriverOnlineSessionOnlineStatusEnum.ONLINE,
-        working_status: DriverOnlineSessionWorkingStatusEnum.WAITING_FOR_CUSTOMER
+        onlineStatus: DriverOnlineSessionOnlineStatusEnum.ONLINE,
+        workingStatus: DriverOnlineSessionWorkingStatusEnum.WAITING_FOR_CUSTOMER
       })
       if (!created) {
         throw new Error('Cannot switch user to online status')
@@ -39,5 +39,15 @@ export class DriverOnlineSessionService implements IDriverLoginSessionService {
     } catch (err) {
       return null
     }
+  }
+
+  async updateDriverOnlineSession (input: IUpdateDriverLoginSession): Promise<DriverOnlineSession> {
+    const updateDto: Prisma.DriverOnlineSessionUpdateInput = {
+      currentLongitude: input.currentLongitude,
+      currentLatitude: input.currentLatitude,
+      onlineStatus: input.onlineStatus,
+      workingStatus: input.workingStatus
+    }
+    return await this.driverOnlineSessionRepo.updateDriverOnlineSession(input.driverId, updateDto)
   }
 }

@@ -1,4 +1,4 @@
-import { type Customer, type Driver, type Staff, type User } from '@prisma/client'
+import { type DriverOnlineSession, type Customer, type Driver, type Staff, type User } from '@prisma/client'
 import { type NextFunction, type Request, type Response } from 'express'
 import { type ICreateCustomerUserInput } from '../services/dto/user.dto'
 
@@ -21,6 +21,9 @@ export interface IStaffRestController {
 
 export interface IDriverRestController {
   getListDrivers: (req: Request, res: Response, next: NextFunction) => Promise<Driver[]>
+  updateDriverOnlineSession: (req: Request, res: Response, next: NextFunction) => Promise<DriverOnlineSession>
+  getAvailableDrivers: (req: Request, res: Response, next: NextFunction) => Promise<Driver[]>
+
 }
 
 export interface ICustomerRestController {

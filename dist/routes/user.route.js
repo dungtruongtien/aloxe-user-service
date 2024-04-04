@@ -8,6 +8,7 @@ var user_controller_rest_1 = __importDefault(require("../controller/user.control
 var router = express_1.default.Router();
 var userController = new user_controller_rest_1.default();
 router.get('/:id', userController.getUser.bind(userController));
-router.get('/', userController.getUsers.bind(userController));
+router.get('/', userController.getListUsers.bind(userController));
+router.post('/', userController.createCustomerUser.bind(userController));
 exports.default = router;
 //# sourceMappingURL=user.route.js.map

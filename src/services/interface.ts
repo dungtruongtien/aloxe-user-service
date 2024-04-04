@@ -1,25 +1,16 @@
-import { type Staff, type DriverOnlineSession, type User, type Driver, type Customer } from '@prisma/client'
-import { type DriverOnlineSessionOnlineStatusEnum } from '../repository/driver/driver_online_session.repository'
-import { type Decimal } from '@prisma/client/runtime/library'
+import { type Staff, type User, type Customer } from '@prisma/client'
 import { type ICreateCustomerUserInput } from './dto/user.dto'
 import { type IGetUsersFilter } from '../repository/user/user.interface'
 import { type IGetStaffsFilter } from '../repository/staff/staff.interface'
-import { type IGetDriversFilter } from '../repository/driver/driver.interface'
 import { type IGetCustomersFilter } from '../repository/customer/customer.interface'
+import { type IDriverService, type IDriverOnlineSessionService } from './driver/driver.interface'
 
 export interface IService {
   user: IUserService
   staff: IStaffService
   driver: IDriverService
   customer: ICustomerService
-  driverLoginSessionService: IDriverLoginSessionService
-}
-
-export interface ISwitchOnOffStatusInput {
-  driverId: number
-  lat: Decimal
-  long: Decimal
-  type: DriverOnlineSessionOnlineStatusEnum
+  driverLoginSessionService: IDriverOnlineSessionService
 }
 
 export interface IUserService {
@@ -33,13 +24,6 @@ export interface IStaffService {
   getListStaffs: (filter?: IGetStaffsFilter) => Promise<Staff[]>
 }
 
-export interface IDriverService {
-  getListDrivers: (filter?: IGetDriversFilter) => Promise<Driver[]>
-}
-
 export interface ICustomerService {
   getListCustomers: (filter?: IGetCustomersFilter) => Promise<Customer[]>
-}
-export interface IDriverLoginSessionService {
-  switchOnOffStatus: (input: ISwitchOnOffStatusInput) => Promise<DriverOnlineSession | null>
 }

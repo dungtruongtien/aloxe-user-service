@@ -1,9 +1,9 @@
 import { type Prisma, type User } from '@prisma/client'
-import { type IUserService } from './interface'
-import { type ICreateCustomerUserInput } from './dto/user.dto'
-import { CustomerRoleEnum, CustomerStatusEnum } from '../repository/user/user.repository'
-import { type IGetUsersFilter, type IUserRepo } from '../repository/user/user.interface'
-import { type ICreateUserAccountInput, type IUserAccountRepo } from '../repository/user_account/user_account.interface'
+import { type IUserService } from '../interface'
+import { type ICreateCustomerUserInput } from '../dto/user.dto'
+import { CustomerRoleEnum, CustomerStatusEnum } from '../../repository/user/user.repository'
+import { type IGetUsersFilter, type IUserRepo } from '../../repository/user/user.interface'
+import { type ICreateUserAccountInput, type IUserAccountRepo } from '../../repository/user_account/user_account.interface'
 
 export class UserService implements IUserService {
   private readonly userRepo: IUserRepo
@@ -14,6 +14,9 @@ export class UserService implements IUserService {
   }
 
   async getListUsers (filter?: IGetUsersFilter): Promise<User[]> {
+    if (filter?.phoneNumbers && !Array.isArray(filter.phoneNumbers)) {
+      filter.phoneNumbers = [filter.phoneNumbers]
+    }
     const data = await this.userRepo.getListUsers(filter)
     return data
   }
@@ -28,7 +31,7 @@ export class UserService implements IUserService {
 
   async createCustomerUser (input: ICreateCustomerUserInput): Promise<User> {
     const existsCustomerUser = await this.userRepo.getCustomerUserByPhone(input.phoneNumber)
-    if (!existsCustomerUser) {
+    if (existsCustomerUser) {
       throw new Error('RegisteredPhoneNumber')
     }
     const createCustomerUserDto: Prisma.UserCreateInput = {
@@ -50,10 +53,12 @@ export class UserService implements IUserService {
     // Create user account
     const createUserAccountDto: ICreateUserAccountInput = {
       username: input.phoneNumber,
-      password: input.password,
+      password: 'abc123', // default password
       userId: customerUser.id
     }
-    await this.userAccountRepo.createUserAccount(createUserAccountDto)
+
+    const userAccountRes = await this.userAccountRepo.createUserAccount(createUserAccountDto)
+    console.log('userAccountRes-----', userAccountRes)
     return customerUser
   }
 }

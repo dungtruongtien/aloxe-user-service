@@ -1,6 +1,6 @@
-import { type IDriverOnlineSessionRepo } from '../interface'
 import prisma from '../../client/prisma'
 import { type Prisma, type DriverOnlineSession } from '@prisma/client'
+import { type IDriverOnlineSessionRepo } from './driver.interface'
 
 export const DRIVER_ONLINE_SESSION_MAPPING = {
   WAITING_FOR_CUSTOMER: 1,
@@ -29,6 +29,15 @@ export class DriverOnlineSessionRepository implements IDriverOnlineSessionRepo {
       where: {
         id
       }
+    })
+  }
+
+  async updateDriverOnlineSession (driverId: number, input: Prisma.DriverOnlineSessionUpdateInput): Promise<DriverOnlineSession> {
+    return await prisma.driverOnlineSession.update({
+      where: {
+        driverId
+      },
+      data: input
     })
   }
 }

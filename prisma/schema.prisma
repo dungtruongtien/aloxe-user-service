@@ -62,6 +62,7 @@ model Driver {
   bookingType Int    @map("booking_type") // Premium, Basic.... 
   driverNo    String @map("driver_no") @db.VarChar(255)
 
+  vehicleType Int @map("vehicle_type") // Premium, Basic.... 
   userId       Int                 @unique @map("user_id")
   user         User                @relation(fields: [userId], references: [id], map: "fk_user_driver")
   license      License?
@@ -109,8 +110,8 @@ model DriverOnlineSession {
   driverId         Int     @unique() @map("driver_id")
   currentLongitude Decimal @map("current_longitude")
   currentLatitude  Decimal @map("current_latitude")
-  online_status    Int     @map("online_status")
-  working_status   Int     @map("working_status")
+  onlineStatus    Int     @map("online_status")
+  workingStatus   Int     @map("working_status")
 
   driver Driver @relation(fields: [driverId], references: [id], map: "fk_driver_onl_session_vehicle")
 

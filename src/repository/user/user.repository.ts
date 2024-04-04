@@ -72,7 +72,10 @@ export class UserRepository implements IUserRepo {
 
   async createCustomerUser (dto: Prisma.UserCreateInput): Promise<User> {
     return await prisma.user.create({
-      data: dto
+      data: dto,
+      include: {
+        customer: true
+      }
     })
   }
 
