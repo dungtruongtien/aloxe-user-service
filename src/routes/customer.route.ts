@@ -3,7 +3,7 @@
 /* eslint @typescript-eslint/no-unsafe-argument: 0 */ // --> OFF
 
 import express from 'express'
-import CustomerRestController from '../controller/customer.controller.rest'
+import CustomerRestController from '../controller/customer/customer.controller.rest'
 const router = express.Router()
 
 const customerController = new CustomerRestController()

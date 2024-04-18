@@ -1,10 +1,10 @@
 import { type User } from '@prisma/client'
-import { type IUserService } from '../services/interface'
-import { UserService } from '../services/user/user.service'
-import { type IUserGraphController } from './interface'
-import { UserAccountRepository } from '../repository/user_account/user_account.repository'
-import { type ICreateCustomerUserInput } from '../services/dto/user.dto'
-import { UserRepository } from '../repository/user/user.repository'
+import { UserService } from '../../services/user/user.service'
+import { UserAccountRepository } from '../../repository/user_account/user_account.repository'
+import { type ICreateCustomerUserInput } from '../../services/user/user.dto'
+import { UserRepository } from '../../repository/user/user.repository'
+import { type IUserService } from '../../services/user/user.interface'
+import { type IUserGraphController } from './user.interface'
 
 export default class UserGraphController implements IUserGraphController {
   private readonly userService: IUserService

@@ -1,4 +1,4 @@
-import UserGraphController from '../../../controller/user.controller.graph'
+import UserGraphController from '../../../controller/user/user.controller.graph'
 import { type ICreateCustomerUserArgs } from '../../../controller/dto/user.dto'
 import { type IContext } from '../../context'
 

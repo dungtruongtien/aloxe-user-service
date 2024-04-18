@@ -1,9 +1,11 @@
+import { format } from 'date-fns'
+import bcrypt from 'bcrypt'
 import { type Prisma, type User } from '@prisma/client'
-import { type IUserService } from '../interface'
-import { type ICreateCustomerUserInput } from '../dto/user.dto'
+import { type IRegisterCustomerUserInput, type ICreateCustomerUserInput } from './user.dto'
 import { CustomerRoleEnum, CustomerStatusEnum } from '../../repository/user/user.repository'
 import { type IGetUsersFilter, type IUserRepo } from '../../repository/user/user.interface'
 import { type ICreateUserAccountInput, type IUserAccountRepo } from '../../repository/user_account/user_account.interface'
+import { type IUserService } from './user.interface'
 
 export class UserService implements IUserService {
   private readonly userRepo: IUserRepo
@@ -57,8 +59,44 @@ export class UserService implements IUserService {
       userId: customerUser.id
     }
 
-    const userAccountRes = await this.userAccountRepo.createUserAccount(createUserAccountDto)
-    console.log('userAccountRes-----', userAccountRes)
+    await this.userAccountRepo.createUserAccount(createUserAccountDto)
     return customerUser
+  }
+
+  registerCustomerUser = async (input: IRegisterCustomerUserInput): Promise<User> => {
+    const existsPhone = await this.userRepo.getCustomerUserByPhone(input.phoneNumber)
+    if (existsPhone) {
+      throw new Error('This phone number was registered')
+    }
+    // Create user and customer
+    const defaultRole = CustomerRoleEnum.Customer
+    const userInput: Prisma.UserCreateInput = {
+      email: input.email,
+      fullName: input.fullName,
+      phoneNumber: input.phoneNumber,
+      address: input.address,
+      role: defaultRole,
+      dob: format(new Date(input.dob), 'yyyy-MM-dd'),
+      status: CustomerStatusEnum.Active,
+      customer: {
+        create: {
+          customerNo: 'ABC',
+          level: 'NORMAL'
+        }
+      }
+    }
+    const userRes = await this.userRepo.createCustomerUser(userInput)
+
+    // Create auth
+    const salt = bcrypt.genSaltSync(10)
+    const hashedPassword = bcrypt.hashSync(input.password, salt)
+    const authInput: ICreateUserAccountInput = {
+      password: hashedPassword,
+      username: input.phoneNumber,
+      userId: userRes.id
+    }
+    await this.userAccountRepo.createUserAccount(authInput)
+
+    return userRes
   }
 }

@@ -3,7 +3,7 @@
 /* eslint @typescript-eslint/no-unsafe-argument: 0 */ // --> OFF
 
 import express from 'express'
-import StaffRestController from '../controller/staff.controller.rest'
+import StaffRestController from '../controller/staff/staff.controller.rest'
 const router = express.Router()
 
 const staffController = new StaffRestController()

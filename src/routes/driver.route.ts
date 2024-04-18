@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/no-unsafe-argument: 0 */ // --> OFF
 
 import express, { type Router } from 'express'
-import DriverRestController from '../controller/driver.controller.rest'
+import DriverRestController from '../controller/driver/driver.controller.rest'
 
 export const createDriverRoute = (): Router => {
   const router = express.Router()

@@ -3,7 +3,7 @@
 /* eslint @typescript-eslint/no-unsafe-argument: 0 */ // --> OFF
 
 import express from 'express'
-import UserRestController from '../controller/user.controller.rest'
+import UserRestController from '../controller/user/user.controller.rest'
 const router = express.Router()
 
 const userController = new UserRestController()

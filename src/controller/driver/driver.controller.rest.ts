@@ -1,12 +1,12 @@
-import { type IDriverRestController } from './interface'
+import { type IDriverRestController } from '../interface'
 import { type NextFunction, type Request, type Response } from 'express'
 import { HttpStatusCode } from 'axios'
-import { DriverRepository } from '../repository/driver/driver.repository'
-import { DriverService } from '../services/driver/driver.service'
-import { type IGetDriversFilter } from '../repository/driver/driver.interface'
-import { type IUpdateDriverLoginSession, type IDriverOnlineSessionService, type IDriverService } from '../services/driver/driver.interface'
-import { DriverOnlineSessionRepository } from '../repository/driver/driver_online_session.repository'
-import { DriverOnlineSessionService } from '../services/driver/driver_online_session.service'
+import { DriverRepository } from '../../repository/driver/driver.repository'
+import { DriverService } from '../../services/driver/driver.service'
+import { type IGetDriversFilter } from '../../repository/driver/driver.interface'
+import { type IUpdateDriverLoginSession, type IDriverOnlineSessionService, type IDriverService } from '../../services/driver/driver.interface'
+import { DriverOnlineSessionRepository } from '../../repository/driver/driver_online_session.repository'
+import { DriverOnlineSessionService } from '../../services/driver/driver_online_session.service'
 
 export default class DriverRestController implements IDriverRestController {
   private readonly driverService: IDriverService
