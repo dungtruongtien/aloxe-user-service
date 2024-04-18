@@ -5,5 +5,5 @@ export interface IDriverRestController {
   getListDrivers: (req: Request, res: Response, next: NextFunction) => Promise<Driver[]>
   updateDriverOnlineSession: (req: Request, res: Response, next: NextFunction) => Promise<DriverOnlineSession>
   getAvailableDrivers: (req: Request, res: Response, next: NextFunction) => Promise<Driver[]>
-
+  handleDriverOnline: (req: Request, res: Response, next: NextFunction) => Promise<any>
 }

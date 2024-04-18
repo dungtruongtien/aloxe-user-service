@@ -32,12 +32,20 @@ export class DriverOnlineSessionRepository implements IDriverOnlineSessionRepo {
     })
   }
 
-  async updateDriverOnlineSession (driverId: number, input: Prisma.DriverOnlineSessionUpdateInput): Promise<DriverOnlineSession> {
+  async update (driverId: number, input: Prisma.DriverOnlineSessionUpdateInput): Promise<DriverOnlineSession> {
     return await prisma.driverOnlineSession.update({
       where: {
         driverId
       },
       data: input
+    })
+  }
+
+  async hardDeleteByDriverId (driverId: number): Promise<DriverOnlineSession> {
+    return await prisma.driverOnlineSession.delete({
+      where: {
+        driverId
+      }
     })
   }
 }

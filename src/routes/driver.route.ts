@@ -10,6 +10,7 @@ export const createDriverRoute = (): Router => {
   router.get('/', driverController.getListDrivers.bind(driverController))
   router.put('/online-session', driverController.updateDriverOnlineSession.bind(driverController))
   router.get('/available-drivers', driverController.getAvailableDrivers.bind(driverController))
+  router.post('/online', driverController.handleDriverOnline.bind(driverController))
 
   return router
 }
