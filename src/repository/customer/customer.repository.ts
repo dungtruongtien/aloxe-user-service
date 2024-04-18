@@ -28,4 +28,13 @@ export class CustomerRepository implements ICustomerRepo {
       }
     })
   }
+
+  async getCustomer (id: number): Promise<Customer | null> {
+    return await prisma.customer.findUnique({
+      where: { id },
+      include: {
+        user: true
+      }
+    })
+  }
 }

@@ -1,6 +1,7 @@
 import { type Staff } from '@prisma/client'
-import { type IStaffService } from './interface'
-import { type IGetStaffsFilter, type IStaffRepo } from '../repository/staff/staff.interface'
+import { type IGetStaffsFilter, type IStaffRepo } from '../../repository/staff/staff.interface'
+import { type IStaffService } from './staff.interface'
+
 export class StaffService implements IStaffService {
   private readonly staffRepo: IStaffRepo
   constructor (staffRepo: IStaffRepo) {

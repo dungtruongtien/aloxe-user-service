@@ -28,4 +28,5 @@ export interface IDriverRestController {
 
 export interface ICustomerRestController {
   getListCustomers: (req: Request, res: Response, next: NextFunction) => Promise<Customer[]>
+  getCustomer: (req: Request, res: Response, next: NextFunction) => Promise<any>
 }

@@ -2,10 +2,12 @@ import { type Prisma, type DriverOnlineSession } from '@prisma/client'
 import { DriverOnlineSessionOnlineStatusEnum, DriverOnlineSessionWorkingStatusEnum } from '../../repository/driver/driver_online_session.repository'
 import { type IDriverOnlineSessionRepo, type IDriverRepo } from '../../repository/driver/driver.interface'
 import { type IUpdateDriverLoginSession, type IDriverOnlineSessionService, type ISwitchOnOffStatusInput } from './driver.interface'
+import { type INotificationService } from '../notification/notification.interface'
 
 export class DriverOnlineSessionService implements IDriverOnlineSessionService {
   private readonly driverOnlineSessionRepo: IDriverOnlineSessionRepo
   private readonly driverRepo: IDriverRepo
+  private readonly notificationService: INotificationService
   constructor (driverOnlineSessionRepo: IDriverOnlineSessionRepo, driverRepo: IDriverRepo) {
     this.driverOnlineSessionRepo = driverOnlineSessionRepo
     this.driverRepo = driverRepo

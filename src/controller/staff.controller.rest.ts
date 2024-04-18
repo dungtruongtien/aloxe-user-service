@@ -3,7 +3,7 @@ import { type IStaffRestController } from './interface'
 import { type NextFunction, type Request, type Response } from 'express'
 import { HttpStatusCode } from 'axios'
 import { StaffRepository } from '../repository/staff/staff.repository'
-import { StaffService } from '../services/staff.service'
+import { StaffService } from '../services/staff/staff.service'
 import { type IGetStaffsFilter } from '../repository/staff/staff.interface'
 
 export default class StaffRestController implements IStaffRestController {
