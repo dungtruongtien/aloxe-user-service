@@ -1,15 +1,17 @@
-/* eslint "@typescript-eslint/no-misused-promises": 0 */ // --> OFF
-/* eslint @typescript-eslint/unbound-method: 0 */ // --> OFF
 /* eslint @typescript-eslint/no-unsafe-argument: 0 */ // --> OFF
 
-import express from 'express'
+import express, { type Router } from 'express'
 import UserRestController from '../controller/user/user.controller.rest'
-const router = express.Router()
 
-const userController = new UserRestController()
+export const createUserRoute = (): Router => {
+  const router = express.Router()
 
-router.get('/:id', userController.getUser.bind(userController))
-router.get('/', userController.getListUsers.bind(userController))
-router.post('/', userController.createCustomerUser.bind(userController))
+  const userController = new UserRestController()
 
-export default router
+  router.get('/:id', userController.getUser.bind(userController))
+  router.get('/', userController.getListUsers.bind(userController))
+  router.post('/', userController.createCustomerUser.bind(userController))
+  router.post('/register', userController.registerCustomerUser.bind(userController))
+
+  return router
+}

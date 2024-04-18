@@ -1,15 +1,15 @@
-import express from 'express'
+import express, { type Router } from 'express'
+import { createUserRoute } from './user.route'
+import { createStaffRoute } from './staff.route'
+import { createDriverRoute } from './driver.route'
+import { createCustomerRoute } from './customer.route'
 
-import userRouterHandler from './user.route'
-import staffRouterHandler from './staff.route'
-import driverRouterHandler from './driver.route'
-import customerRouterHandler from './customer.route'
+export const createRootRoute = (): Router => {
+  const router = express.Router()
 
-const router = express.Router()
-
-router.use('/users', userRouterHandler)
-router.use('/drivers', driverRouterHandler)
-router.use('/customers', customerRouterHandler)
-router.use('/staffs', staffRouterHandler)
-
-export default router
+  router.use('/users', createUserRoute())
+  router.use('/drivers', createDriverRoute())
+  router.use('/customers', createCustomerRoute())
+  router.use('/staffs', createStaffRoute())
+  return router
+}

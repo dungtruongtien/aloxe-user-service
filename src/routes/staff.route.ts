@@ -1,13 +1,12 @@
-/* eslint "@typescript-eslint/no-misused-promises": 0 */ // --> OFF
-/* eslint @typescript-eslint/unbound-method: 0 */ // --> OFF
 /* eslint @typescript-eslint/no-unsafe-argument: 0 */ // --> OFF
-
-import express from 'express'
+import express, { type Router } from 'express'
 import StaffRestController from '../controller/staff/staff.controller.rest'
-const router = express.Router()
 
-const staffController = new StaffRestController()
+export const createStaffRoute = (): Router => {
+  const router = express.Router()
 
-router.get('/', staffController.getListStaffs.bind(staffController))
+  const staffController = new StaffRestController()
 
-export default router
+  router.get('/', staffController.getListStaffs.bind(staffController))
+  return router
+}

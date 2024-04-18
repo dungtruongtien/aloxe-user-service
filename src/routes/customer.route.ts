@@ -1,13 +1,13 @@
-/* eslint "@typescript-eslint/no-misused-promises": 0 */ // --> OFF
-/* eslint @typescript-eslint/unbound-method: 0 */ // --> OFF
 /* eslint @typescript-eslint/no-unsafe-argument: 0 */ // --> OFF
-
-import express from 'express'
+import express, { type Router } from 'express'
 import CustomerRestController from '../controller/customer/customer.controller.rest'
-const router = express.Router()
 
-const customerController = new CustomerRestController()
+export const createCustomerRoute = (): Router => {
+  const router = express.Router()
 
-router.get('/', customerController.getListCustomers.bind(customerController))
+  const customerController = new CustomerRestController()
 
-export default router
+  router.get('/', customerController.getListCustomers.bind(customerController))
+
+  return router
+}
