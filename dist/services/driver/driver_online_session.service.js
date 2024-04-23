@@ -96,7 +96,7 @@ var DriverOnlineSessionService = (function () {
                             onlineStatus: input.onlineStatus,
                             workingStatus: input.workingStatus
                         };
-                        return [4, this.driverOnlineSessionRepo.updateDriverOnlineSession(input.driverId, updateDto)];
+                        return [4, this.driverOnlineSessionRepo.update(input.driverId, updateDto)];
                     case 1: return [2, _a.sent()];
                 }
             });

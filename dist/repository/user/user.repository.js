@@ -117,7 +117,11 @@ var UserRepository = (function () {
                             include: {
                                 staff: true,
                                 customer: true,
-                                driver: true
+                                driver: {
+                                    include: {
+                                        license: true
+                                    }
+                                }
                             }
                         })];
                     case 1: return [2, _a.sent()];

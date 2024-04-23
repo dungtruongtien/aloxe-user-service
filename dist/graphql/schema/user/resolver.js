@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var user_controller_graph_1 = __importDefault(require("../../../controller/user.controller.graph"));
+var user_controller_graph_1 = __importDefault(require("../../../controller/user/user.controller.graph"));
 var userController = new user_controller_graph_1.default();
 exports.default = {
     Query: {

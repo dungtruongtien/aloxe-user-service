@@ -37,9 +37,46 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DriverService = void 0;
+var driver_online_session_repository_1 = require("../../repository/driver/driver_online_session.repository");
 var DriverService = (function () {
-    function DriverService(driverRepo) {
+    function DriverService(driverRepo, driverOnlineSessionRepo) {
+        var _this = this;
+        this.handleDriverOnline = function (input) { return __awaiter(_this, void 0, void 0, function () {
+            var driverData, resp;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!(input.type === 'OFFLINE')) return [3, 2];
+                        return [4, this.driverOnlineSessionRepo.hardDeleteByDriverId(input.driverId)];
+                    case 1: return [2, _a.sent()];
+                    case 2: return [4, this.driverRepo.getDriver(input.driverId)];
+                    case 3:
+                        driverData = _a.sent();
+                        if (!driverData) {
+                            throw new Error('User not existed');
+                        }
+                        return [4, this.driverOnlineSessionRepo.createOne({
+                                driver: {
+                                    connect: {
+                                        id: input.driverId
+                                    }
+                                },
+                                currentLatitude: input.lat,
+                                currentLongitude: input.long,
+                                onlineStatus: driver_online_session_repository_1.DriverOnlineSessionOnlineStatusEnum.ONLINE,
+                                workingStatus: driver_online_session_repository_1.DriverOnlineSessionWorkingStatusEnum.WAITING_FOR_CUSTOMER
+                            })];
+                    case 4:
+                        resp = _a.sent();
+                        if (!resp) {
+                            throw new Error('Cannot switch user to online status');
+                        }
+                        return [2, resp];
+                }
+            });
+        }); };
         this.driverRepo = driverRepo;
+        this.driverOnlineSessionRepo = driverOnlineSessionRepo;
     }
     DriverService.prototype.getListDrivers = function (filter) {
         return __awaiter(this, void 0, void 0, function () {

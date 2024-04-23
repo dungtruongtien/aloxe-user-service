@@ -40,8 +40,8 @@ async function start () {
   app.use(express.json())
   // app.use(bodyParser.graphql())
   app.use(express.urlencoded({ extended: true }))
-  app.use(graphqlAuthenticate)
-  app.use(restAuthenticate)
+  // app.use(graphqlAuthenticate)
+  // app.use(restAuthenticate)
 
   app.use('/api', createRootRoute())
 
@@ -70,8 +70,8 @@ async function start () {
     })
   })
 
-  httpServer.listen({ port: 4003 }, function () {
-    console.log('🚀 Server ready at http://localhost:4003/')
+  httpServer.listen({ port: process.env.PORT }, function () {
+    console.log(`🚀 Server ready at ${process.env.DOMAIN}:${process.env.PORT}`)
   })
 }
 

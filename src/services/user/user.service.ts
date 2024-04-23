@@ -1,5 +1,4 @@
-import { format } from 'date-fns'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { type Prisma, type User } from '@prisma/client'
 import { type IRegisterCustomerUserInput, type ICreateCustomerUserInput } from './user.dto'
 import { CustomerRoleEnum, CustomerStatusEnum } from '../../repository/user/user.repository'
@@ -76,7 +75,7 @@ export class UserService implements IUserService {
       phoneNumber: input.phoneNumber,
       address: input.address,
       role: defaultRole,
-      dob: format(new Date(input.dob), 'yyyy-MM-dd'),
+      dob: input.dob,
       status: CustomerStatusEnum.Active,
       customer: {
         create: {

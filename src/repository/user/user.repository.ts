@@ -65,7 +65,11 @@ export class UserRepository implements IUserRepo {
       include: {
         staff: true,
         customer: true,
-        driver: true
+        driver: {
+          include: {
+            license: true
+          }
+        }
       }
     })
   }

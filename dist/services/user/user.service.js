@@ -35,11 +35,59 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
+var bcryptjs_1 = __importDefault(require("bcryptjs"));
 var user_repository_1 = require("../../repository/user/user.repository");
 var UserService = (function () {
     function UserService(userRepo, userAccountRepo) {
+        var _this = this;
+        this.registerCustomerUser = function (input) { return __awaiter(_this, void 0, void 0, function () {
+            var existsPhone, defaultRole, userInput, userRes, salt, hashedPassword, authInput;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, this.userRepo.getCustomerUserByPhone(input.phoneNumber)];
+                    case 1:
+                        existsPhone = _a.sent();
+                        if (existsPhone) {
+                            throw new Error('This phone number was registered');
+                        }
+                        defaultRole = user_repository_1.CustomerRoleEnum.Customer;
+                        userInput = {
+                            email: input.email,
+                            fullName: input.fullName,
+                            phoneNumber: input.phoneNumber,
+                            address: input.address,
+                            role: defaultRole,
+                            dob: input.dob,
+                            status: user_repository_1.CustomerStatusEnum.Active,
+                            customer: {
+                                create: {
+                                    customerNo: 'ABC',
+                                    level: 'NORMAL'
+                                }
+                            }
+                        };
+                        return [4, this.userRepo.createCustomerUser(userInput)];
+                    case 2:
+                        userRes = _a.sent();
+                        salt = bcryptjs_1.default.genSaltSync(10);
+                        hashedPassword = bcryptjs_1.default.hashSync(input.password, salt);
+                        authInput = {
+                            password: hashedPassword,
+                            username: input.phoneNumber,
+                            userId: userRes.id
+                        };
+                        return [4, this.userAccountRepo.createUserAccount(authInput)];
+                    case 3:
+                        _a.sent();
+                        return [2, userRes];
+                }
+            });
+        }); };
         this.userRepo = userRepo;
         this.userAccountRepo = userAccountRepo;
     }
@@ -82,7 +130,7 @@ var UserService = (function () {
     };
     UserService.prototype.createCustomerUser = function (input) {
         return __awaiter(this, void 0, void 0, function () {
-            var existsCustomerUser, createCustomerUserDto, customerUser, createUserAccountDto, userAccountRes;
+            var existsCustomerUser, createCustomerUserDto, customerUser, createUserAccountDto;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, this.userRepo.getCustomerUserByPhone(input.phoneNumber)];
@@ -116,8 +164,7 @@ var UserService = (function () {
                         };
                         return [4, this.userAccountRepo.createUserAccount(createUserAccountDto)];
                     case 3:
-                        userAccountRes = _a.sent();
-                        console.log('userAccountRes-----', userAccountRes);
+                        _a.sent();
                         return [2, customerUser];
                 }
             });

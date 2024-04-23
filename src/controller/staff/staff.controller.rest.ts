@@ -1,10 +1,10 @@
-import { type IStaffService } from '../../services/interface'
-import { type IStaffRestController } from '../interface'
 import { type NextFunction, type Request, type Response } from 'express'
 import { HttpStatusCode } from 'axios'
 import { StaffRepository } from '../../repository/staff/staff.repository'
 import { StaffService } from '../../services/staff/staff.service'
 import { type IGetStaffsFilter } from '../../repository/staff/staff.interface'
+import { type IStaffRestController } from './staff.interface'
+import { type IStaffService } from '../../services/staff/staff.interface'
 
 export default class StaffRestController implements IStaffRestController {
   private readonly staffService: IStaffService

@@ -50,6 +50,6 @@ export class DriverOnlineSessionService implements IDriverOnlineSessionService {
       onlineStatus: input.onlineStatus,
       workingStatus: input.workingStatus
     }
-    return await this.driverOnlineSessionRepo.updateDriverOnlineSession(input.driverId, updateDto)
+    return await this.driverOnlineSessionRepo.update(input.driverId, updateDto)
   }
 }

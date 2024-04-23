@@ -55,7 +55,7 @@ var UserAccountRepository = (function () {
                         config = {
                             method: 'post',
                             maxBodyLength: Infinity,
-                            url: 'http://localhost:4004/api/user_accounts/',
+                            url: "".concat(process.env.AUTH_SVC_DOMAIN, "/api/auth/"),
                             headers: {
                                 authorization: constant_1.INTERNAL_TOKEN
                             },

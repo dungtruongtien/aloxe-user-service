@@ -84,7 +84,7 @@ var DriverOnlineSessionRepository = (function () {
             });
         });
     };
-    DriverOnlineSessionRepository.prototype.updateDriverOnlineSession = function (driverId, input) {
+    DriverOnlineSessionRepository.prototype.update = function (driverId, input) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -93,6 +93,20 @@ var DriverOnlineSessionRepository = (function () {
                                 driverId: driverId
                             },
                             data: input
+                        })];
+                    case 1: return [2, _a.sent()];
+                }
+            });
+        });
+    };
+    DriverOnlineSessionRepository.prototype.hardDeleteByDriverId = function (driverId) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, prisma_1.default.driverOnlineSession.delete({
+                            where: {
+                                driverId: driverId
+                            }
                         })];
                     case 1: return [2, _a.sent()];
                 }
