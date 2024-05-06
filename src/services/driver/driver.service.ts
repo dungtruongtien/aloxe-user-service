@@ -2,6 +2,7 @@ import { type DriverOnlineSession, type Driver } from '@prisma/client'
 import { type IDriverOnlineSessionRepo, type IDriverRepo, type IGetDriversFilter } from '../../repository/driver/driver.interface'
 import { type IHandleDriverOnlineInput, type IDriverService } from './driver.interface'
 import { DriverOnlineSessionOnlineStatusEnum, DriverOnlineSessionWorkingStatusEnum } from '../../repository/driver/driver_online_session.repository'
+import { BadRequestError } from '../../common/custom_error'
 
 export class DriverService implements IDriverService {
   private readonly driverRepo: IDriverRepo
@@ -26,7 +27,7 @@ export class DriverService implements IDriverService {
     }
     const driverData = await this.driverRepo.getDriver(input.driverId)
     if (!driverData) {
-      throw new Error('User not existed')
+      throw new BadRequestError('User not existed')
     }
 
     const resp = await this.driverOnlineSessionRepo.createOne({

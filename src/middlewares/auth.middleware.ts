@@ -2,6 +2,7 @@ import jwt, { type JwtPayload, type VerifyErrors } from 'jsonwebtoken'
 import { type NextFunction, type Request, type Response } from 'express'
 import { AUTH_ACCESS_SERCRET_KEY } from '../common/constant'
 import { GraphQLError } from 'graphql'
+import { AuthenticationError } from '../common/custom_error'
 
 const WHITE_LIST_APIS = ['/api/user/v1/register', '/api/auth/v1/login', '/api/auth/v1/token/access', '/api/auth/v1/logout']
 const WHITE_LIST_GRAPHQL_OPERATIONS = ['Login', 'SubgraphIntrospectQuery', 'IntrospectionQuery']
@@ -60,13 +61,13 @@ export const restAuthenticate = (req: Request, res: Response, next: NextFunction
     // eslint-disable-next-line
     if (err) {
       if (err.name === 'TokenExpiredError') {
-        throw new Error('TokenExpiredError')
+        throw new AuthenticationError('TokenExpiredError')
       }
 
-      throw new Error('TokenExpiredError')
+      throw new AuthenticationError('TokenExpiredError')
     }
 
-    res.locals.account = { ...decoded }
+    res.locals.session = { ...decoded }
     next()
   })
 }

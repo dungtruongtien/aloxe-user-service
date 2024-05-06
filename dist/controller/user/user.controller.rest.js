@@ -87,7 +87,7 @@ var UserRestController = (function () {
             var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.userService.getUser(res.locals.user.id)];
+                    case 0: return [4, this.userService.getUser(res.locals.session.user.id)];
                     case 1:
                         user = _a.sent();
                         res.status(axios_1.HttpStatusCode.Ok).json({
@@ -101,34 +101,48 @@ var UserRestController = (function () {
     };
     UserRestController.prototype.createCustomerUser = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user;
+            var user, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.userService.createCustomerUser(req.body)];
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4, this.userService.createCustomerUser(req.body)];
                     case 1:
                         user = _a.sent();
                         res.status(axios_1.HttpStatusCode.Ok).json({
                             status: 'SUCCESS',
                             data: user
                         });
-                        return [2];
+                        return [3, 3];
+                    case 2:
+                        error_1 = _a.sent();
+                        next(error_1);
+                        return [3, 3];
+                    case 3: return [2];
                 }
             });
         });
     };
     UserRestController.prototype.registerCustomerUser = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var user;
+            var user, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.userService.registerCustomerUser(req.body)];
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4, this.userService.registerCustomerUser(req.body)];
                     case 1:
                         user = _a.sent();
                         res.status(axios_1.HttpStatusCode.Ok).json({
                             status: 'SUCCESS',
                             data: user
                         });
-                        return [2];
+                        return [3, 3];
+                    case 2:
+                        error_2 = _a.sent();
+                        next(error_2);
+                        return [3, 3];
+                    case 3: return [2];
                 }
             });
         });

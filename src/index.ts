@@ -9,12 +9,11 @@ import cors from 'cors'
 import schema from './graphql/schema/schema'
 import initCtx from './graphql/context'
 import { createRootRoute } from './routes/api.route'
-import { graphqlAuthenticate, restAuthenticate } from './middlewares/auth.middleware'
 
 interface ICustomError {
   message: string
   status?: number
-  name: string
+  code: string
 }
 
 // eslint-disable-next-line
@@ -56,17 +55,17 @@ async function start () {
   )
 
   app.use((err: ICustomError, req: Request, res: Response, next: NextFunction) => {
+    console.log('err-----', err)
     // eslint-disable-next-line
     if (!err.status || (err.status >= 500 && err.status <= 599)) {
       err.status = 500
-      err.name = 'INTERNAL_ERROR'
+      err.code = 'INTERNAL_ERROR'
       err.message = 'Internal error'
     }
     res.status(err.status).json({
-      name: err.name,
+      code: err.code,
       message: err.message,
-      data: null,
-      status: err.name
+      data: null
     })
   })
 

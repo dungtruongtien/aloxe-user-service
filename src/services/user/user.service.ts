@@ -5,6 +5,7 @@ import { CustomerRoleEnum, CustomerStatusEnum } from '../../repository/user/user
 import { type IGetUsersFilter, type IUserRepo } from '../../repository/user/user.interface'
 import { type ICreateUserAccountInput, type IUserAccountRepo } from '../../repository/user_account/user_account.interface'
 import { type IUserService } from './user.interface'
+import { BadRequestError } from '../../common/custom_error'
 
 export class UserService implements IUserService {
   private readonly userRepo: IUserRepo
@@ -65,7 +66,7 @@ export class UserService implements IUserService {
   registerCustomerUser = async (input: IRegisterCustomerUserInput): Promise<User> => {
     const existsPhone = await this.userRepo.getCustomerUserByPhone(input.phoneNumber)
     if (existsPhone) {
-      throw new Error('This phone number was registered')
+      throw new BadRequestError('This phone number was registered')
     }
     // Create user and customer
     const defaultRole = CustomerRoleEnum.Customer

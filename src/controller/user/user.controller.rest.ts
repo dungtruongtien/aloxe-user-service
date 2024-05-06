@@ -35,7 +35,7 @@ export default class UserRestController implements IUserRestController {
   }
 
   async me (req: Request, res: Response, next: NextFunction): Promise<any> {
-    const user = await this.userService.getUser(res.locals.user.id as number)
+    const user = await this.userService.getUser(res.locals.session.user.id as number)
     res.status(HttpStatusCode.Ok).json({
       status: 'SUCCESS',
       data: user
@@ -43,18 +43,26 @@ export default class UserRestController implements IUserRestController {
   }
 
   async createCustomerUser (req: Request, res: Response, next: NextFunction): Promise<any> {
-    const user = await this.userService.createCustomerUser(req.body as ICreateCustomerUserInput)
-    res.status(HttpStatusCode.Ok).json({
-      status: 'SUCCESS',
-      data: user
-    })
+    try {
+      const user = await this.userService.createCustomerUser(req.body as ICreateCustomerUserInput)
+      res.status(HttpStatusCode.Ok).json({
+        status: 'SUCCESS',
+        data: user
+      })
+    } catch (error) {
+      next(error)
+    }
   }
 
   async registerCustomerUser (req: Request, res: Response, next: NextFunction): Promise<any> {
-    const user = await this.userService.registerCustomerUser(req.body as IRegisterCustomerUserInput)
-    res.status(HttpStatusCode.Ok).json({
-      status: 'SUCCESS',
-      data: user
-    })
+    try {
+      const user = await this.userService.registerCustomerUser(req.body as IRegisterCustomerUserInput)
+      res.status(HttpStatusCode.Ok).json({
+        status: 'SUCCESS',
+        data: user
+      })
+    } catch (error) {
+      next(error)
+    }
   }
 }

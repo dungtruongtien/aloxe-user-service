@@ -77,16 +77,16 @@ function start() {
                         context: context_1.default
                     }));
                     app.use(function (err, req, res, next) {
+                        console.log('err-----', err);
                         if (!err.status || (err.status >= 500 && err.status <= 599)) {
                             err.status = 500;
-                            err.name = 'INTERNAL_ERROR';
+                            err.code = 'INTERNAL_ERROR';
                             err.message = 'Internal error';
                         }
                         res.status(err.status).json({
-                            name: err.name,
+                            code: err.code,
                             message: err.message,
-                            data: null,
-                            status: err.name
+                            data: null
                         });
                     });
                     httpServer.listen({ port: process.env.PORT }, function () {

@@ -108,8 +108,8 @@ model Vehicle {
 model DriverOnlineSession {
   id               Int     @id @default(autoincrement())
   driverId         Int     @unique() @map("driver_id")
-  currentLongitude Decimal @map("current_longitude")
-  currentLatitude  Decimal @map("current_latitude")
+  currentLongitude Decimal @db.Decimal(11,8) @map("current_longitude")
+  currentLatitude  Decimal @db.Decimal(10,8) @map("current_latitude")
   onlineStatus    Int     @map("online_status")
   workingStatus   Int     @map("working_status")
 

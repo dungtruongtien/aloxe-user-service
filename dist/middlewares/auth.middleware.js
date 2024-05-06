@@ -18,6 +18,7 @@ exports.restAuthenticate = exports.graphqlAuthenticate = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var constant_1 = require("../common/constant");
 var graphql_1 = require("graphql");
+var custom_error_1 = require("../common/custom_error");
 var WHITE_LIST_APIS = ['/api/user/v1/register', '/api/auth/v1/login', '/api/auth/v1/token/access', '/api/auth/v1/logout'];
 var WHITE_LIST_GRAPHQL_OPERATIONS = ['Login', 'SubgraphIntrospectQuery', 'IntrospectionQuery'];
 var GRAPHQL_PATH = '/graphql';
@@ -68,11 +69,11 @@ var restAuthenticate = function (req, res, next) {
     jsonwebtoken_1.default.verify(token, constant_1.AUTH_ACCESS_SERCRET_KEY, function (err, decoded) {
         if (err) {
             if (err.name === 'TokenExpiredError') {
-                throw new Error('TokenExpiredError');
+                throw new custom_error_1.AuthenticationError('TokenExpiredError');
             }
-            throw new Error('TokenExpiredError');
+            throw new custom_error_1.AuthenticationError('TokenExpiredError');
         }
-        res.locals.account = __assign({}, decoded);
+        res.locals.session = __assign({}, decoded);
         next();
     });
 };

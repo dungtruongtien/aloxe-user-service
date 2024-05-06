@@ -44,10 +44,14 @@ export default class DriverRestController implements IDriverRestController {
   }
 
   handleDriverOnline = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-    const data = await this.driverService.handleDriverOnline(req.query.body as unknown as IHandleDriverOnlineInput)
-    res.status(HttpStatusCode.Ok).json({
-      status: 'SUCCESS',
-      data
-    })
+    try {
+      const data = await this.driverService.handleDriverOnline(req.body as unknown as IHandleDriverOnlineInput)
+      res.status(HttpStatusCode.Ok).json({
+        status: 'SUCCESS',
+        data
+      })
+    } catch (error) {
+      next(error)
+    }
   }
 }

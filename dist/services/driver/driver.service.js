@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DriverService = void 0;
 var driver_online_session_repository_1 = require("../../repository/driver/driver_online_session.repository");
+var custom_error_1 = require("../../common/custom_error");
 var DriverService = (function () {
     function DriverService(driverRepo, driverOnlineSessionRepo) {
         var _this = this;
@@ -53,7 +54,7 @@ var DriverService = (function () {
                     case 3:
                         driverData = _a.sent();
                         if (!driverData) {
-                            throw new Error('User not existed');
+                            throw new custom_error_1.BadRequestError('User not existed');
                         }
                         return [4, this.driverOnlineSessionRepo.createOne({
                                 driver: {

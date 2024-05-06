@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 var bcryptjs_1 = __importDefault(require("bcryptjs"));
 var user_repository_1 = require("../../repository/user/user.repository");
+var custom_error_1 = require("../../common/custom_error");
 var UserService = (function () {
     function UserService(userRepo, userAccountRepo) {
         var _this = this;
@@ -53,7 +54,7 @@ var UserService = (function () {
                     case 1:
                         existsPhone = _a.sent();
                         if (existsPhone) {
-                            throw new Error('This phone number was registered');
+                            throw new custom_error_1.BadRequestError('This phone number was registered');
                         }
                         defaultRole = user_repository_1.CustomerRoleEnum.Customer;
                         userInput = {
