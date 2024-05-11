@@ -62,7 +62,7 @@ var restAuthenticate = function (req, res, next) {
         next();
         return;
     }
-    var token = (_a = req.headers.authorization) !== null && _a !== void 0 ? _a : '';
+    var token = (_a = req.headers['x-access-token']) !== null && _a !== void 0 ? _a : '';
     if (token === '') {
         throw new Error('Authentication failed');
     }

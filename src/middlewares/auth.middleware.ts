@@ -52,7 +52,7 @@ export const restAuthenticate = (req: Request, res: Response, next: NextFunction
     return
   }
 
-  const token: string = req.headers.authorization ?? ''
+  const token: string = req.headers['x-access-token'] as string ?? ''
   if (token === '') {
     throw new Error('Authentication failed')
   }

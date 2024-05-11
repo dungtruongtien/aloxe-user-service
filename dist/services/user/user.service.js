@@ -58,7 +58,6 @@ var UserService = (function () {
                         }
                         defaultRole = user_repository_1.CustomerRoleEnum.Customer;
                         userInput = {
-                            email: input.email,
                             fullName: input.fullName,
                             phoneNumber: input.phoneNumber,
                             address: input.address,
@@ -143,7 +142,6 @@ var UserService = (function () {
                         createCustomerUserDto = {
                             fullName: input.fullName,
                             phoneNumber: input.phoneNumber,
-                            email: input.email,
                             address: input.address,
                             dob: input.dob,
                             role: user_repository_1.CustomerRoleEnum.Customer,
