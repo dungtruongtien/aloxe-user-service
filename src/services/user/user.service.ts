@@ -39,7 +39,6 @@ export class UserService implements IUserService {
     const createCustomerUserDto: Prisma.UserCreateInput = {
       fullName: input.fullName,
       phoneNumber: input.phoneNumber,
-      email: input.email,
       address: input.address,
       dob: input.dob,
       role: CustomerRoleEnum.Customer,
@@ -71,7 +70,6 @@ export class UserService implements IUserService {
     // Create user and customer
     const defaultRole = CustomerRoleEnum.Customer
     const userInput: Prisma.UserCreateInput = {
-      email: input.email,
       fullName: input.fullName,
       phoneNumber: input.phoneNumber,
       address: input.address,

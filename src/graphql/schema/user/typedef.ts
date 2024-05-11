@@ -15,7 +15,6 @@ export default gql`
     fullName: String
     phoneNumber: String
     password: String
-    email: String
     address: String
     dob: String
     role: Int
@@ -32,7 +31,6 @@ export default gql`
     fullName: String!
     phoneNumber: String!
     password: String!
-    email: String!
     address: String
     dob: String
     role: Int
@@ -55,7 +53,6 @@ export default gql`
     id: Int
     fullName: String
     phoneNumber: String
-    email: String
     address: String
     dob: String
     role: Int

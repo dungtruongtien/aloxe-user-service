@@ -2,7 +2,6 @@ export interface ICreateCustomerUserInput {
   fullName: string
   phoneNumber: string
   password: string
-  email: string
   address?: string
   dob?: Date
   role: number
@@ -18,7 +17,6 @@ export interface ICreateCustomerInput {
 export interface IRegisterCustomerUserInput {
   fullName: string
   phoneNumber: string
-  email: string
   address: string
   dob: string
   password: string
