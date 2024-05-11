@@ -59,10 +59,10 @@ model Customer {
 
 model Driver {
   id          Int    @id @default(autoincrement())
-  bookingType Int    @map("booking_type") // Premium, Basic.... 
+  bookingType Int    @map("booking_type") // Premium: 1, Basic:
   driverNo    String @map("driver_no") @db.VarChar(255)
 
-  vehicleType Int @map("vehicle_type") // Premium, Basic.... 
+  vehicleType Int @map("vehicle_type") // FOUR_SEAT: 1, FIVE_SEAT: 2, SEVEN_SEAT: 3, LUXURY: 4
   userId       Int                 @unique @map("user_id")
   user         User                @relation(fields: [userId], references: [id], map: "fk_user_driver")
   license      License?
