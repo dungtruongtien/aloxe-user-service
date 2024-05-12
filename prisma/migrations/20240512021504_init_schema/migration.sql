@@ -3,7 +3,6 @@ CREATE TABLE `users` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `full_name` VARCHAR(191) NOT NULL,
     `phone_number` VARCHAR(191) NOT NULL,
-    `email` VARCHAR(255) NOT NULL,
     `address` VARCHAR(191) NULL,
     `dob` DATETIME(3) NULL,
     `role` INTEGER NOT NULL,
