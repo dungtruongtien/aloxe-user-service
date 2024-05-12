@@ -109,17 +109,25 @@ var DriverRestController = (function () {
     };
     DriverRestController.prototype.getAvailableDrivers = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var data;
+            var data, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, this.driverService.getAvailableDrivers(req.query.vehicleType)];
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4, this.driverService.getAvailableDrivers(req.query.vehicleType)];
                     case 1:
                         data = _a.sent();
                         res.status(axios_1.HttpStatusCode.Ok).json({
                             status: 'SUCCESS',
                             data: data
                         });
-                        return [2];
+                        return [3, 3];
+                    case 2:
+                        error_2 = _a.sent();
+                        console.log('error-----', error_2);
+                        next(error_2);
+                        return [3, 3];
+                    case 3: return [2];
                 }
             });
         });

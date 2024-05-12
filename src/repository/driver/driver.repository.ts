@@ -33,22 +33,12 @@ export class DriverRepository implements IDriverRepo {
   async getAvailableDrivers (vehicleType: number): Promise<Driver[]> {
     return await prisma.driver.findMany({
       where: {
-        vehicleType
+        vehicleType,
+        onlineSession: {
+          onlineStatus: 1,
+          workingStatus: 1
+        }
       },
-      // include: [
-      //   {
-      //     model: DriverLogginSession,
-      //     as: 'driverLoginSession',
-      //     where: {
-      //       status: 'ONLINE',
-      //       drivingStatus: 'WAITING_FOR_CUSTOMER'
-      //     }
-      //   },
-      //   {
-      //     model: Vehicle,
-      //     as: 'vehicle'
-      //   }
-      // ]
       include: {
         onlineSession: {
           where: {

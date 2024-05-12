@@ -91,7 +91,11 @@ var DriverRepository = (function () {
                 switch (_a.label) {
                     case 0: return [4, prisma_1.default.driver.findMany({
                             where: {
-                                vehicleType: vehicleType
+                                vehicleType: vehicleType,
+                                onlineSession: {
+                                    onlineStatus: 1,
+                                    workingStatus: 1
+                                }
                             },
                             include: {
                                 onlineSession: {
