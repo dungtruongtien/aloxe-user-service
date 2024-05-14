@@ -43,6 +43,7 @@ exports.UserService = void 0;
 var bcryptjs_1 = __importDefault(require("bcryptjs"));
 var user_repository_1 = require("../../repository/user/user.repository");
 var custom_error_1 = require("../../common/custom_error");
+var driver_online_session_repository_1 = require("../../repository/driver/driver_online_session.repository");
 var UserService = (function () {
     function UserService(userRepo, userAccountRepo) {
         var _this = this;
@@ -109,21 +110,31 @@ var UserService = (function () {
         });
     };
     UserService.prototype.getUser = function (id) {
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var user;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0: return [4, this.userRepo.getUser(id)];
-                    case 1: return [2, _a.sent()];
+                    case 1:
+                        user = _c.sent();
+                        if ((_b = (_a = user === null || user === void 0 ? void 0 : user.driver) === null || _a === void 0 ? void 0 : _a.onlineSession) === null || _b === void 0 ? void 0 : _b.onlineStatus) {
+                            user.driver.onlineSession.onlineStatus = driver_online_session_repository_1.DRIVER_ONLINE_SESSION_MAPPING[user.driver.onlineSession.onlineStatus];
+                        }
+                        return [2, user];
                 }
             });
         });
     };
     UserService.prototype.me = function (id) {
         return __awaiter(this, void 0, void 0, function () {
+            var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, this.userRepo.getUser(id)];
-                    case 1: return [2, _a.sent()];
+                    case 1:
+                        user = _a.sent();
+                        return [2, user];
                 }
             });
         });

@@ -6,6 +6,7 @@ import { type IGetUsersFilter, type IUserRepo } from '../../repository/user/user
 import { type ICreateUserAccountInput, type IUserAccountRepo } from '../../repository/user_account/user_account.interface'
 import { type IUserService } from './user.interface'
 import { BadRequestError } from '../../common/custom_error'
+import { DRIVER_ONLINE_SESSION_MAPPING } from '../../repository/driver/driver_online_session.repository'
 
 export class UserService implements IUserService {
   private readonly userRepo: IUserRepo
@@ -24,11 +25,16 @@ export class UserService implements IUserService {
   }
 
   async getUser (id: number): Promise<User | null> {
-    return await this.userRepo.getUser(id)
+    const user: any = await this.userRepo.getUser(id)
+    if (user?.driver?.onlineSession?.onlineStatus) {
+      user.driver.onlineSession.onlineStatus = DRIVER_ONLINE_SESSION_MAPPING[user.driver.onlineSession.onlineStatus]
+    }
+    return user
   }
 
   async me (id: number): Promise<User | null> {
-    return await this.userRepo.getUser(id)
+    const user = await this.userRepo.getUser(id)
+    return user
   }
 
   async createCustomerUser (input: ICreateCustomerUserInput): Promise<User> {

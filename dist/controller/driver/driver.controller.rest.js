@@ -47,21 +47,23 @@ var DriverRestController = (function () {
         this.driverRepository = new driver_repository_1.DriverRepository();
         this.driverOnlineSessionRepository = new driver_online_session_repository_1.DriverOnlineSessionRepository();
         this.handleDriverOnline = function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-            var data, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var driverId, data, error_1;
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4, this.driverService.handleDriverOnline(req.body)];
+                        _b.trys.push([0, 2, , 3]);
+                        driverId = (_a = res.locals) === null || _a === void 0 ? void 0 : _a.session.driver.id;
+                        return [4, this.driverService.handleDriverOnline(req.body, driverId)];
                     case 1:
-                        data = _a.sent();
+                        data = _b.sent();
                         res.status(axios_1.HttpStatusCode.Ok).json({
                             status: 'SUCCESS',
                             data: data
                         });
                         return [3, 3];
                     case 2:
-                        error_1 = _a.sent();
+                        error_1 = _b.sent();
                         next(error_1);
                         return [3, 3];
                     case 3: return [2];

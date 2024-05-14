@@ -39,11 +39,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DriverOnlineSessionRepository = exports.DriverOnlineSessionWorkingStatusEnum = exports.DriverOnlineSessionOnlineStatusEnum = exports.DRIVER_ONLINE_SESSION_MAPPING = void 0;
+exports.DriverOnlineSessionRepository = exports.DriverOnlineSessionWorkingStatusEnum = exports.DriverOnlineSessionOnlineStatusEnum = exports.DRIVER_ONLINE_SESSION_MAPPING = exports.DRIVER_ONLINE_SESSION_WORKING_MAPPING = void 0;
 var prisma_1 = __importDefault(require("../../client/prisma"));
-exports.DRIVER_ONLINE_SESSION_MAPPING = {
+exports.DRIVER_ONLINE_SESSION_WORKING_MAPPING = {
     WAITING_FOR_CUSTOMER: 1,
     DRIVING: 2
+};
+exports.DRIVER_ONLINE_SESSION_MAPPING = {
+    1: 'ONLINE',
+    2: 'OFFLINE'
 };
 var DriverOnlineSessionOnlineStatusEnum;
 (function (DriverOnlineSessionOnlineStatusEnum) {
@@ -104,6 +108,20 @@ var DriverOnlineSessionRepository = (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4, prisma_1.default.driverOnlineSession.delete({
+                            where: {
+                                driverId: driverId
+                            }
+                        })];
+                    case 1: return [2, _a.sent()];
+                }
+            });
+        });
+    };
+    DriverOnlineSessionRepository.prototype.getOne = function (driverId) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, prisma_1.default.driverOnlineSession.findUnique({
                             where: {
                                 driverId: driverId
                             }

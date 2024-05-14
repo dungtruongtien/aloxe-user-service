@@ -34,5 +34,5 @@ export interface IHandleDriverOnlineInput {
 export interface IDriverService {
   getListDrivers: (filter?: IGetDriversFilter) => Promise<Driver[]>
   getAvailableDrivers: (vehicleType: number) => Promise<Driver[]>
-  handleDriverOnline: (input: IHandleDriverOnlineInput) => Promise<DriverOnlineSession>
+  handleDriverOnline: (input: IHandleDriverOnlineInput, driverId: number) => Promise<DriverOnlineSession>
 }

@@ -42,24 +42,30 @@ var custom_error_1 = require("../../common/custom_error");
 var DriverService = (function () {
     function DriverService(driverRepo, driverOnlineSessionRepo) {
         var _this = this;
-        this.handleDriverOnline = function (input) { return __awaiter(_this, void 0, void 0, function () {
-            var driverData, resp;
+        this.handleDriverOnline = function (input, driverId) { return __awaiter(_this, void 0, void 0, function () {
+            var driverData, driverOnlineSessionData, resp;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!(input.type === 'OFFLINE')) return [3, 2];
-                        return [4, this.driverOnlineSessionRepo.hardDeleteByDriverId(input.driverId)];
+                        return [4, this.driverOnlineSessionRepo.hardDeleteByDriverId(driverId)];
                     case 1: return [2, _a.sent()];
-                    case 2: return [4, this.driverRepo.getDriver(input.driverId)];
+                    case 2: return [4, this.driverRepo.getDriver(driverId)];
                     case 3:
                         driverData = _a.sent();
                         if (!driverData) {
                             throw new custom_error_1.BadRequestError('User not existed');
                         }
+                        return [4, this.driverOnlineSessionRepo.getOne(driverId)];
+                    case 4:
+                        driverOnlineSessionData = _a.sent();
+                        if (driverOnlineSessionData && driverOnlineSessionData.onlineStatus === driver_online_session_repository_1.DriverOnlineSessionOnlineStatusEnum.ONLINE) {
+                            return [2, driverOnlineSessionData];
+                        }
                         return [4, this.driverOnlineSessionRepo.createOne({
                                 driver: {
                                     connect: {
-                                        id: input.driverId
+                                        id: driverId
                                     }
                                 },
                                 currentLatitude: input.lat,
@@ -67,7 +73,7 @@ var DriverService = (function () {
                                 onlineStatus: driver_online_session_repository_1.DriverOnlineSessionOnlineStatusEnum.ONLINE,
                                 workingStatus: driver_online_session_repository_1.DriverOnlineSessionWorkingStatusEnum.WAITING_FOR_CUSTOMER
                             })];
-                    case 4:
+                    case 5:
                         resp = _a.sent();
                         if (!resp) {
                             throw new Error('Cannot switch user to online status');

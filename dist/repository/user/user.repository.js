@@ -119,6 +119,7 @@ var UserRepository = (function () {
                                 customer: true,
                                 driver: {
                                     include: {
+                                        onlineSession: true,
                                         license: true
                                     }
                                 }

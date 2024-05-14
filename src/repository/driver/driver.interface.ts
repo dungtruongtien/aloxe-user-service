@@ -6,6 +6,7 @@ export interface IGetDriversFilter {
 
 export interface IDriverOnlineSessionRepo {
   createOne: (dto: Prisma.DriverOnlineSessionCreateInput) => Promise<DriverOnlineSession>
+  getOne: (driverId: number) => Promise<DriverOnlineSession | null>
   hardDelete: (id: number) => Promise<DriverOnlineSession>
   update: (driverId: number, input: Prisma.DriverOnlineSessionUpdateInput) => Promise<DriverOnlineSession>
   hardDeleteByDriverId: (driverId: number) => Promise<DriverOnlineSession>

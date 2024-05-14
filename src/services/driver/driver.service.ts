@@ -21,19 +21,24 @@ export class DriverService implements IDriverService {
     return await this.driverRepo.getAvailableDrivers(vehicleType)
   }
 
-  handleDriverOnline = async (input: IHandleDriverOnlineInput): Promise<DriverOnlineSession> => {
+  handleDriverOnline = async (input: IHandleDriverOnlineInput, driverId: number): Promise<DriverOnlineSession> => {
     if (input.type === 'OFFLINE') {
-      return await this.driverOnlineSessionRepo.hardDeleteByDriverId(input.driverId)
+      return await this.driverOnlineSessionRepo.hardDeleteByDriverId(driverId)
     }
-    const driverData = await this.driverRepo.getDriver(input.driverId)
+    const driverData = await this.driverRepo.getDriver(driverId)
     if (!driverData) {
       throw new BadRequestError('User not existed')
+    }
+
+    const driverOnlineSessionData = await this.driverOnlineSessionRepo.getOne(driverId)
+    if (driverOnlineSessionData && driverOnlineSessionData.onlineStatus === DriverOnlineSessionOnlineStatusEnum.ONLINE) {
+      return driverOnlineSessionData
     }
 
     const resp = await this.driverOnlineSessionRepo.createOne({
       driver: {
         connect: {
-          id: input.driverId
+          id: driverId
         }
       },
       currentLatitude: input.lat,

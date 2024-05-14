@@ -67,6 +67,7 @@ export class UserRepository implements IUserRepo {
         customer: true,
         driver: {
           include: {
+            onlineSession: true,
             license: true
           }
         }
