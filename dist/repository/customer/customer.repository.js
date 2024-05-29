@@ -62,7 +62,7 @@ var CustomerRepository = (function () {
                 switch (_a.label) {
                     case 0:
                         where = {};
-                        if (filter && (filter === null || filter === void 0 ? void 0 : filter.ids.length) > 0) {
+                        if (filter && filter.ids.length > 0) {
                             where.id = {
                                 in: filter.ids
                             };

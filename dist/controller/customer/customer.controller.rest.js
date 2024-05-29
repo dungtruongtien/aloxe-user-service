@@ -39,6 +39,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = require("axios");
 var customer_repository_1 = require("../../repository/customer/customer.repository");
 var customer_service_1 = require("../../services/customer/customer.service");
+function parseQueryFromPath(urlString) {
+    var parsedUrl = new URL("http://dummy".concat(urlString));
+    var queryParams = Object.fromEntries(parsedUrl.searchParams.entries());
+    return queryParams;
+}
 var CustomerRestController = (function () {
     function CustomerRestController() {
         this.customerRepository = new customer_repository_1.CustomerRepository();
@@ -46,12 +51,15 @@ var CustomerRestController = (function () {
     }
     CustomerRestController.prototype.getListCustomers = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var filter, data;
+            var parsedQuery, data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        filter = req.query.filter;
-                        return [4, this.customerService.getListCustomers(filter)];
+                        parsedQuery = parseQueryFromPath(req.originalUrl);
+                        if (parsedQuery && (parsedQuery === null || parsedQuery === void 0 ? void 0 : parsedQuery.ids.length) > 0) {
+                            parsedQuery.ids = parsedQuery.ids.split(',').map(Number);
+                        }
+                        return [4, this.customerService.getListCustomers(parsedQuery)];
                     case 1:
                         data = _a.sent();
                         res.status(axios_1.HttpStatusCode.Ok).json({
