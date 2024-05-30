@@ -22,6 +22,9 @@ export class DriverService implements IDriverService {
   }
 
   handleDriverOnline = async (input: IHandleDriverOnlineInput, driverId: number): Promise<DriverOnlineSession> => {
+    if (!driverId) {
+      throw new BadRequestError('Missing driver id')
+    }
     if (input.type === 'OFFLINE') {
       return await this.driverOnlineSessionRepo.hardDeleteByDriverId(driverId)
     }
